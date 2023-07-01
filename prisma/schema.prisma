@@ -1,0 +1,62 @@
+generator client {
+    provider = "prisma-client-js"
+}
+
+datasource db {
+    provider = "mysql"
+    url      = env("DATABASE_URL")
+}
+
+// Enums
+enum Settings {
+    SERVER_SETTINGS
+}
+
+enum Status {
+    DEFAULT
+    READONLY
+    NOPURCHASE
+    DISABLED
+}
+
+enum Stock {
+    IN_STOCK
+    OUT_STOCK
+    DISCONTINUED
+    HIDDEN
+}
+
+// Database
+model System {
+    id       Settings @id @default(SERVER_SETTINGS)
+    status   Status   @default(DEFAULT)
+    currency String   @default("CAD")
+    ratings  Boolean  @default(true)
+    hideAnon Boolean  @default(false)
+}
+
+model Products {
+    id          String    @id @default(uuid())
+    title       String
+    subtitle    String?
+    description String
+    images      String
+    tags        String
+    price       Float
+    ratings     Ratings[]
+    stock       Stock     @default(IN_STOCK)
+    createdAt   DateTime  @default(now())
+    updatedAt   DateTime  @updatedAt
+}
+
+model Ratings {
+    id          String    @id @default(uuid())
+    user        String
+    name        String    @default("Anonymous")
+    description String?
+    rating      Float
+    product     Products? @relation(fields: [productID], references: [id])
+    productID   String?
+
+    @@unique([user, productID])
+}

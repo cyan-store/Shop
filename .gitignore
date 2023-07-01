@@ -13,6 +13,7 @@ logs
 *.log
 
 # Misc
+/tmp
 .DS_Store
 .fleet
 .idea
