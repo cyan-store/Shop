@@ -1,5 +1,6 @@
 generator client {
-    provider = "prisma-client-js"
+    provider        = "prisma-client-js"
+    previewFeatures = ["fullTextSearch", "fullTextIndex"]
 }
 
 datasource db {
@@ -47,6 +48,9 @@ model Products {
     stock       Stock     @default(IN_STOCK)
     createdAt   DateTime  @default(now())
     updatedAt   DateTime  @updatedAt
+
+    @@fulltext([title])
+    @@fulltext([title, subtitle])
 }
 
 model Ratings {

@@ -1,2 +1,2 @@
-export const PRODUCTS = 2;
+export const PRODUCTS = 5;
 export const RATINGS = 4;
