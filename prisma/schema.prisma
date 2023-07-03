@@ -33,7 +33,6 @@ model System {
     status   Status   @default(DEFAULT)
     currency String   @default("CAD")
     ratings  Boolean  @default(true)
-    hideAnon Boolean  @default(false)
 }
 
 model Products {

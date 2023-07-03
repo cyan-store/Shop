@@ -1,18 +1,26 @@
-import { defineSafeEventHandler } from "@/server/utils/handler";
 import { RATINGS } from "@/server/data/paginate";
 import prisma from "@/server/data/prisma";
 
 interface RatingsOptions {
     where: {
         productID: string;
-        NOT?: {
-            name: string;
+        product: {
+            NOT: {
+                stock: any;
+            };
         };
 
         rating?: {
             gte?: number;
             lte?: number;
         };
+    };
+
+    select: {
+        id: true;
+        name: true;
+        description: true;
+        rating: true;
     };
 
     take: number;
@@ -23,8 +31,10 @@ interface RatingAverage {
     _avg: { rating: true };
     where: {
         productID: string;
-        NOT?: {
-            name: string;
+        product: {
+            NOT: {
+                stock: any;
+            };
         };
     };
 }
@@ -59,6 +69,18 @@ export default defineSafeEventHandler(async (evt) => {
     const options: RatingsOptions = {
         where: {
             productID: id,
+            product: {
+                NOT: {
+                    stock: "HIDDEN",
+                },
+            },
+        },
+
+        select: {
+            id: true,
+            name: true,
+            description: true,
+            rating: true,
         },
 
         take: RATINGS,
@@ -67,13 +89,15 @@ export default defineSafeEventHandler(async (evt) => {
 
     const ratings: RatingAverage = {
         _avg: { rating: true },
-        where: { productID: id },
+        where: {
+            productID: id,
+            product: {
+                NOT: {
+                    stock: "HIDDEN",
+                },
+            },
+        },
     };
-
-    if (evt.context.settings.hideAnon) {
-        options.where.NOT = { name: "Anonymous" };
-        ratings.where.NOT = { name: "Anonymous" };
-    }
 
     if (rating !== 0) {
         options.where.rating = {

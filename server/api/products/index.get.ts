@@ -1,4 +1,3 @@
-import { defineSafeEventHandler } from "@/server/utils/handler";
 import { PRODUCTS } from "@/server/data/paginate";
 import prisma from "@/server/data/prisma";
 
