@@ -1,6 +1,7 @@
 <template>
     <div>
-        <NuxtLink to="/">Home</NuxtLink>
+        <NuxtLink to="/">Home</NuxtLink> |
+        <NuxtLink to="/products">Products</NuxtLink>
 
         <div v-if="auth">
             <NuxtLink to="/profile">
