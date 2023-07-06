@@ -3,9 +3,9 @@
         <div v-if="res">
             <NuxtLink :to="`/products/${props.id}/ratings`">Ratings</NuxtLink>
 
-            <div v-if="res?.data">
+            <div v-if="res">
                 <ProductsItemRatingsReviewBlock
-                    v-for="rating in res.data"
+                    v-for="rating in res"
                     :id="rating.id"
                     :key="rating.id"
                     :name="rating.name"

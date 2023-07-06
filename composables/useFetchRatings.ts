@@ -1,13 +1,18 @@
 import { Ratings } from "@prisma/client";
 
+interface Stats {
+    total: number[];
+    average: number;
+}
+
 // Return ratings preview
 export const useFetchRatingsPreview = async (id: string) => {
-    const { data, error } = await useFetch<{
-        average: number;
-        data: Ratings[];
-    }>(`/api/products/${id}/ratings`, {
-        key: "ratings-" + String(id),
-    });
+    const { data, error } = await useFetch<Ratings[]>(
+        `/api/products/${id}/ratings`,
+        {
+            key: "ratings-" + String(id),
+        }
+    );
 
     if (error.value) {
         showError(error.value);
@@ -27,17 +32,28 @@ export const useFetchRatings = async (
         rating: String(rating),
     });
 
-    const data = await $fetch<{
-        average: number;
-        data: Ratings[];
-    }>(`/api/products/${id}/ratings?${query.toString()}`).catch((e) => {
+    const data = await $fetch<Ratings[]>(
+        `/api/products/${id}/ratings?${query.toString()}`
+    ).catch((e) => {
         showError({
             statusCode: e.statusCode,
             statusMessage: e.statusMessage,
         });
 
-        return { average: 0, data: [] as Ratings[] };
+        return [] as Ratings[];
     });
 
     return data;
+};
+
+export const useFetchRatingsStats = async (id: string) => {
+    const { data, error } = await useFetch<Stats>(`/api/products/${id}/stats`, {
+        key: "ratings-stats-" + String(id),
+    });
+
+    if (error.value) {
+        showError(error.value);
+    }
+
+    return data.value;
 };

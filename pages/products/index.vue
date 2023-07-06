@@ -15,6 +15,10 @@
             :price="product.price"
             :stock="product.stock"
         />
+
+        <div v-if="!products.length">
+            <h2>Nothing here</h2>
+        </div>
     </div>
 </template>
 

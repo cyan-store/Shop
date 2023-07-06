@@ -27,18 +27,6 @@ interface RatingsOptions {
     skip: number;
 }
 
-interface RatingAverage {
-    _avg: { rating: true };
-    where: {
-        productID: string;
-        product: {
-            NOT: {
-                stock: any;
-            };
-        };
-    };
-}
-
 export default defineSafeEventHandler(async (evt) => {
     const { id } = evt.context.params as { id: string };
     const query = getQuery(evt);
@@ -87,18 +75,6 @@ export default defineSafeEventHandler(async (evt) => {
         skip: RATINGS * page,
     };
 
-    const ratings: RatingAverage = {
-        _avg: { rating: true },
-        where: {
-            productID: id,
-            product: {
-                NOT: {
-                    stock: "HIDDEN",
-                },
-            },
-        },
-    };
-
     if (rating !== 0) {
         options.where.rating = {
             lte: rating + 0.5,
@@ -107,11 +83,5 @@ export default defineSafeEventHandler(async (evt) => {
     }
 
     // Query request
-    const data = await prisma.ratings.findMany(options);
-    const avg = await prisma.ratings.aggregate(ratings);
-
-    return {
-        average: avg._avg.rating || 0,
-        data,
-    };
+    return await prisma.ratings.findMany(options);
 });

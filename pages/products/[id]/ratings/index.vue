@@ -3,13 +3,15 @@
         <h2>{{ route.params.id }}</h2>
 
         <div>
-            <ProductsItemRatingsStarControl v-model="star" @switched="filter" />
+            <ProductsItemRatingsStarControl
+                :id="String(route.params.id)"
+                v-model="star"
+                @switched="filter"
+            />
             <UiPaginateInput v-model="page" />
         </div>
 
         <div v-if="data">
-            <h2>Average: {{ average }}</h2>
-
             <ProductsItemRatingsReviewBlock
                 v-for="rating in data"
                 :id="rating.id"
@@ -18,6 +20,10 @@
                 :description="rating.description"
                 :rating="rating.rating"
             />
+
+            <div v-if="!data.length">
+                <h2>Nothing here</h2>
+            </div>
         </div>
 
         <NuxtLink :to="'/products/' + route.params.id">Back</NuxtLink>
@@ -31,9 +37,7 @@ const route = useRoute();
 
 const star = ref("0");
 const page = ref(0);
-
 const data = ref<Ratings[]>([]);
-const average = ref(0);
 
 const filter = async () => {
     const res = await useFetchRatings(
@@ -42,8 +46,7 @@ const filter = async () => {
         parseInt(star.value)
     );
 
-    data.value = JSON.parse(JSON.stringify(res.data));
-    average.value = res.average;
+    data.value = JSON.parse(JSON.stringify(res));
 };
 
 watch(page, filter);

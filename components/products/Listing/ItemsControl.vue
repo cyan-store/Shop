@@ -37,7 +37,7 @@ const page = ref(0);
 const options = reactive({
     search: "",
     order: "any" as "any" | "title" | "date" | "price" | "rating",
-    sort: "asc" as "asc" | "desc",
+    sort: "desc" as "asc" | "desc",
 });
 
 const emit = defineEmits<{
