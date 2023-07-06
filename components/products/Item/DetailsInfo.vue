@@ -6,6 +6,8 @@
 </template>
 
 <script lang="ts" setup>
+import { Stock } from "@prisma/client";
+
 const props = defineProps<{
     title: string;
     subtitle: string | null;
@@ -13,7 +15,7 @@ const props = defineProps<{
     images: string;
     tags: string;
     price: number;
-    stock: "IN_STOCK " | "OUT_STOCK" | "DISCONTINUED";
+    stock: Stock;
     createdAt: string;
     updatedAt: string;
 }>();

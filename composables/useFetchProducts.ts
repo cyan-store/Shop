@@ -1,11 +1,12 @@
 import { Products } from "@prisma/client";
 
+// Return product listing
 export const useFetchProducts = async (
     page = 0,
     search = "",
     order: "any" | "title" | "date" | "price" | "rating" = "any",
     sort: "asc" | "desc" = "asc"
-): Promise<Products[]> => {
+) => {
     const query = new URLSearchParams({
         page: page.toString(),
         search,
@@ -25,4 +26,17 @@ export const useFetchProducts = async (
     );
 
     return products;
+};
+
+// Return product info
+export const useFetchProductID = async (id: string) => {
+    const { data, error } = await useFetch<Products>(`/api/products/${id}`, {
+        key: "product-" + String(id),
+    });
+
+    if (error.value) {
+        showError(error.value);
+    }
+
+    return data.value;
 };

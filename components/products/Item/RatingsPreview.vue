@@ -1,0 +1,26 @@
+<template>
+    <div>
+        <div v-if="res">
+            <NuxtLink :to="`/products/${props.id}/ratings`">Ratings</NuxtLink>
+
+            <div v-if="res?.data">
+                <ProductsItemRatingsReviewBlock
+                    v-for="rating in res.data"
+                    :id="rating.id"
+                    :key="rating.id"
+                    :name="rating.name"
+                    :description="rating.description"
+                    :rating="rating.rating"
+                />
+            </div>
+        </div>
+    </div>
+</template>
+
+<script lang="ts" setup>
+const props = defineProps<{
+    id: string;
+}>();
+
+const res = await useFetchRatingsPreview(props.id);
+</script>
