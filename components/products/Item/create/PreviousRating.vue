@@ -41,7 +41,7 @@ const removeRating = async () => {
 onMounted(async () => {
     const userRating = await useFetchRatingUser(0, props.id);
 
-    emits("update:modelValue", !!userRating[0].name);
+    emits("update:modelValue", !!userRating[0]?.name || false);
 
     if (userRating.length) {
         rating.id = userRating[0].id;

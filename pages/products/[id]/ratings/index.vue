@@ -27,8 +27,7 @@
             </div>
         </div>
 
-        <div>
-            <!-- TODO: Disabled this if product is discontinued -->
+        <div v-if="product?.stock !== 'DISCONTINUED'">
             <NuxtLink
                 v-if="auth"
                 :to="`/products/${route.params.id}/ratings/create`"
@@ -50,6 +49,7 @@ import { Ratings } from "@prisma/client";
 const { status } = useAuth();
 const route = useRoute();
 
+const product = await useFetchProductID(String(route.params.id));
 const auth = computed(() => status.value === "authenticated");
 const data = ref<Ratings[]>([]);
 const star = ref("0");

@@ -1,6 +1,14 @@
 import { Ratings } from "@prisma/client";
 
-interface Stats {
+export interface ProductRatings extends Ratings {
+    product: {
+        id: string;
+        title: string;
+        stock: string;
+    };
+}
+
+export interface Stats {
     total: number[];
     average: number;
 }
@@ -60,11 +68,31 @@ export const useFetchRatingsStats = async (id: string) => {
 };
 
 // Create/delete ratings
-export const useCreateRating = () => {};
+export const useCreateRating = async (
+    id: string,
+    rating: number,
+    description = ""
+) => {
+    const data = await $fetch<ProductRatings>(`/api/profile/ratings?id=${id}`, {
+        credentials: "include",
+        method: "POST",
+        mode: "cors",
+        body: JSON.stringify({ rating, description }),
+    }).catch((e) => {
+        showError({
+            statusCode: e.statusCode,
+            statusMessage: e.statusMessage,
+        });
+
+        return {} as Ratings;
+    });
+
+    return data;
+};
 
 // Delete a user rating
 export const useDeleteRating = async (id: string) => {
-    const data = await $fetch<Ratings>(`/api/profile/ratings?id=${id}`, {
+    const data = await $fetch<ProductRatings>(`/api/profile/ratings?id=${id}`, {
         credentials: "include",
         method: "DELETE",
         mode: "cors",
@@ -83,7 +111,7 @@ export const useDeleteRating = async (id: string) => {
 // Returns user ratings
 export const useFetchRatingUser = async (page: number, id = "") => {
     const query = new URLSearchParams({ page: String(page), id });
-    const data = await $fetch<Ratings[]>(
+    const data = await $fetch<ProductRatings[]>(
         `/api/profile/ratings?${query.toString()}`,
         {
             credentials: "include",
@@ -96,7 +124,7 @@ export const useFetchRatingUser = async (page: number, id = "") => {
             statusMessage: e.statusMessage,
         });
 
-        return [] as Ratings[];
+        return [] as ProductRatings[];
     });
 
     return data;
