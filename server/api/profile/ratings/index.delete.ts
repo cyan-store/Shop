@@ -37,6 +37,7 @@ export default defineSafeEventHandler(async (evt) => {
             description: true,
             rating: true,
             productID: true,
+            createdAt: true,
         },
     });
 });

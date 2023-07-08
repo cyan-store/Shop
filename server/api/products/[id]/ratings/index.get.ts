@@ -21,6 +21,7 @@ interface RatingsOptions {
         name: true;
         description: true;
         rating: true;
+        createdAt: true;
     };
 
     take: number;
@@ -69,6 +70,7 @@ export default defineSafeEventHandler(async (evt) => {
             name: true,
             description: true,
             rating: true,
+            createdAt: true,
         },
 
         take: RATINGS,

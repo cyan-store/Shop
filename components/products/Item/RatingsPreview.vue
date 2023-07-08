@@ -11,6 +11,7 @@
                     :name="rating.name"
                     :description="rating.description"
                     :rating="rating.rating"
+                    :created-at="String(rating.createdAt)"
                 />
             </div>
         </div>

@@ -3,6 +3,7 @@
         <h2>{{ name }}</h2>
         <p v-if="description">{{ description }}</p>
         <code>{{ rating }}</code>
+        <h4>{{ createdAt }}</h4>
     </div>
 </template>
 
@@ -12,5 +13,6 @@ defineProps<{
     name: string;
     description: string | null;
     rating: number;
+    createdAt: string;
 }>();
 </script>

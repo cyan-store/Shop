@@ -19,12 +19,26 @@
                 :name="rating.name"
                 :description="rating.description"
                 :rating="rating.rating"
+                :created-at="String(rating.rating)"
             />
 
             <div v-if="!data.length">
                 <h2>Nothing here</h2>
             </div>
         </div>
+
+        <div>
+            <!-- TODO: Disabled this if product is discontinued -->
+            <NuxtLink
+                v-if="auth"
+                :to="`/products/${route.params.id}/ratings/create`"
+            >
+                Leave a rating
+            </NuxtLink>
+            <a v-else>You must be logged in to leave a rating!</a>
+        </div>
+
+        <br />
 
         <NuxtLink :to="'/products/' + route.params.id">Back</NuxtLink>
     </div>
@@ -33,11 +47,13 @@
 <script lang="ts" setup>
 import { Ratings } from "@prisma/client";
 
+const { status } = useAuth();
 const route = useRoute();
 
+const auth = computed(() => status.value === "authenticated");
+const data = ref<Ratings[]>([]);
 const star = ref("0");
 const page = ref(0);
-const data = ref<Ratings[]>([]);
 
 const filter = async () => {
     const res = await useFetchRatings(

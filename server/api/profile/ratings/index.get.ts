@@ -18,6 +18,7 @@ interface UserRatingsOptions {
         description: true;
         rating: true;
         productID: true;
+        createdAt: true;
     };
 
     take: number;
@@ -58,6 +59,7 @@ export default defineSafeEventHandler(async (evt) => {
             description: true,
             rating: true,
             productID: true,
+            createdAt: true,
         },
 
         take: RATINGS,
