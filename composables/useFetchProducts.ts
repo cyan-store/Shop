@@ -1,4 +1,4 @@
-import { Products } from "@prisma/client";
+import type { Products } from "@prisma/client";
 
 // Return product listing
 export const useFetchProducts = async (

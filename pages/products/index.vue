@@ -23,7 +23,7 @@
 </template>
 
 <script lang="ts" setup>
-import { Products } from "@prisma/client";
+import type { Products } from "@prisma/client";
 
 const products = ref([] as Products[]);
 const searchProducts = async (

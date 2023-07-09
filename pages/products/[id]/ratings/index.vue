@@ -44,7 +44,7 @@
 </template>
 
 <script lang="ts" setup>
-import { Ratings } from "@prisma/client";
+import type { Ratings } from "@prisma/client";
 
 const { status } = useAuth();
 const route = useRoute();

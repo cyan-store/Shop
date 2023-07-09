@@ -1,4 +1,4 @@
-import { Ratings } from "@prisma/client";
+import type { Ratings } from "@prisma/client";
 
 export interface ProductRatings extends Ratings {
     product: {

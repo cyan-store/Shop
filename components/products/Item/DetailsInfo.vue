@@ -6,7 +6,7 @@
 </template>
 
 <script lang="ts" setup>
-import { Stock } from "@prisma/client";
+import type { Stock } from "@prisma/client";
 
 const props = defineProps<{
     title: string;

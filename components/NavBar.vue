@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div v-if="!isFatal">
         <NuxtLink to="/">Home</NuxtLink> |
         <NuxtLink to="/products">Products</NuxtLink>
 
@@ -27,7 +27,10 @@
 <script lang="ts" setup>
 const { signIn, signOut, status, data } = useAuth();
 
+const settings = useSettings();
 const auth = computed(() => status.value === "authenticated");
+const isFatal = computed(() => settings.state === "FATAL");
+
 const logout = async () => {
     if (confirm("Are you sure?")) {
         await signOut({
