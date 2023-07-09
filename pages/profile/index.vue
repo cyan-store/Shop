@@ -3,7 +3,9 @@
         <h2>{{ status }}</h2>
         <pre>{{ data }}</pre>
 
-        <NuxtLink to="/profile/ratings">Ratings</NuxtLink>
+        <NuxtLink v-if="settings.ratings" to="/profile/ratings">
+            Ratings
+        </NuxtLink>
     </div>
 </template>
 
@@ -11,4 +13,5 @@
 definePageMeta({ middleware: "auth" });
 
 const { status, data } = useAuth();
+const settings = useSettings();
 </script>

@@ -22,7 +22,7 @@
 <script lang="ts" setup>
 import type { ProductRatings } from "@/composables/useFetchRatings";
 
-definePageMeta({ middleware: "auth" });
+definePageMeta({ middleware: ["auth", "rating"] });
 
 const page = ref(0);
 const ratings = ref<ProductRatings[]>([]);

@@ -46,6 +46,8 @@
 <script lang="ts" setup>
 import type { Ratings } from "@prisma/client";
 
+definePageMeta({ middleware: "rating" });
+
 const { status } = useAuth();
 const route = useRoute();
 

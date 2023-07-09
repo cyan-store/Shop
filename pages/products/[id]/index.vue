@@ -15,12 +15,16 @@
                 :updated-at="String(data.updatedAt)"
             />
 
-            <ProductsItemRatingsPreview :id="String(route.params.id)" />
+            <ProductsItemRatingsPreview
+                v-if="settings.ratings"
+                :id="String(route.params.id)"
+            />
         </div>
     </div>
 </template>
 
 <script lang="ts" setup>
 const route = useRoute();
+const settings = useSettings();
 const data = await useFetchProductID(String(route.params.id));
 </script>

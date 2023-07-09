@@ -21,7 +21,7 @@
 </template>
 
 <script lang="ts" setup>
-definePageMeta({ middleware: "auth" });
+definePageMeta({ middleware: ["auth", "rating"] });
 
 const route = useRoute();
 const hasRating = ref(false);
