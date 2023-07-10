@@ -4,6 +4,7 @@
 
         <div v-if="data">
             <ProductsItemDetailsInfo
+                :id="String(route.params.id)"
                 :title="data.title"
                 :subtitle="data.subtitle"
                 :description="data.description"

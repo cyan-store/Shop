@@ -6,6 +6,9 @@
         <NuxtLink v-if="settings.ratings" to="/profile/ratings">
             Ratings
         </NuxtLink>
+        <NuxtLink v-if="settings.state !== 'NOPURCHASE'" to="/profile/orders">
+            Orders
+        </NuxtLink>
     </div>
 </template>
 

@@ -2,6 +2,11 @@
     <div>
         <h2>{{ props.title }}</h2>
         <pre>{{ props }}</pre>
+
+        <div v-if="canCart">
+            <button @click="add">Add to cart {{ amount }}</button>
+            <button v-if="amount" @click="cart.remove(props.id)">Remove</button>
+        </div>
     </div>
 </template>
 
@@ -9,6 +14,7 @@
 import type { Stock } from "@prisma/client";
 
 const props = defineProps<{
+    id: string;
     title: string;
     subtitle: string | null;
     description: string;
@@ -19,4 +25,37 @@ const props = defineProps<{
     createdAt: string;
     updatedAt: string;
 }>();
+
+const { status } = useAuth();
+const settings = useSettings();
+const cart = useCart();
+
+const canCart = computed(() => {
+    return (
+        settings.state !== "NOPURCHASE" &&
+        status.value === "authenticated" &&
+        props.stock === "IN_STOCK"
+    );
+});
+
+const amount = computed(() => {
+    const inc = cart.includes(props.id);
+
+    if (inc === -1) {
+        return "";
+    }
+
+    return "x" + cart.items[inc].amount;
+});
+
+const add = () => {
+    cart.add({
+        id: props.id,
+        title: props.title,
+        subtitle: String(props.subtitle) || "",
+        images: props.images,
+        price: props.price,
+        amount: 1,
+    });
+};
 </script>

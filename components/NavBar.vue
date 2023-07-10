@@ -15,6 +15,7 @@
                 <span>{{ data?.user?.name }}'s Profile</span>
             </NuxtLink>
             |
+            <GeneralNavCart />
             <a @click="logout">Logout</a>
         </div>
         <div v-else>
@@ -28,11 +29,14 @@
 const { signIn, signOut, status, data } = useAuth();
 
 const settings = useSettings();
+const cart = useCart();
 const auth = computed(() => status.value === "authenticated");
 const isFatal = computed(() => settings.state === "FATAL");
 
 const logout = async () => {
     if (confirm("Are you sure?")) {
+        cart.clear();
+
         await signOut({
             redirect: true,
             callbackUrl: "/",
