@@ -1,4 +1,5 @@
 import { env } from "process";
+import { v4 as uuidv4 } from "uuid";
 import prisma from "@/server/data/prisma";
 import stripe from "@/server/data/stripe";
 
@@ -9,7 +10,7 @@ interface CartItem {
 
 interface CheckoutItem {
     id: string;
-    name: string;
+    title: string;
     price: number;
     amount: number;
 }
@@ -18,6 +19,7 @@ export default defineSafeEventHandler(async (evt) => {
     const body = await readBody<CartItem[]>(evt);
     const user = evt.context.token.sub;
 
+    const uuid = uuidv4();
     const products: CartItem[] = [];
     const checkout: CheckoutItem[] = [];
 
@@ -86,8 +88,8 @@ export default defineSafeEventHandler(async (evt) => {
 
         checkout.push({
             id: product.id,
-            name: product.title,
-            price: product.price, // TODO: Convert price
+            title: product.title,
+            price: product.price,
             amount: item.amount,
         });
     }
@@ -96,14 +98,14 @@ export default defineSafeEventHandler(async (evt) => {
     const session = await stripe.checkout.sessions.create({
         payment_method_types: ["card"],
         mode: "payment",
-        success_url: `${env.STRIPE_URL}/todo-success`,
-        cancel_url: `${env.STRIPE_URL}/todo-cancel`,
+        success_url: `${env.STRIPE_URL}/profile/orders/${uuid}`,
+        cancel_url: `${env.STRIPE_URL}/profile/orders/${uuid}?cancel=true`,
         line_items: checkout.map((c) => {
             return {
                 price_data: {
                     currency: evt.context.settings.currency.toLowerCase(),
                     product_data: {
-                        name: c.name,
+                        name: c.title,
                     },
 
                     unit_amount: c.price, // TODO: Convert the price in UI
@@ -123,8 +125,10 @@ export default defineSafeEventHandler(async (evt) => {
 
     const order = await prisma.orders.create({
         data: {
+            id: uuid,
             productID: ids,
-            TransactionID: session.id,
+            paymentID: session.id,
+            transactionID: "",
             userID: user,
             status: "UNPAID",
             quantity,
@@ -142,5 +146,6 @@ export default defineSafeEventHandler(async (evt) => {
     return {
         id: order.id,
         url: session.url,
+        checkout,
     };
 });

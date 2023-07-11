@@ -3,7 +3,5 @@
 </template>
 
 <script lang="ts" setup>
-definePageMeta({ middleware: "auth" });
-
-// TODO: Disable this page if NOPURCHASE
+definePageMeta({ middleware: ["auth", "purchase"] });
 </script>
