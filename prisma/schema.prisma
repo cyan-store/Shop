@@ -25,6 +25,22 @@ enum Stock {
     HIDDEN
 }
 
+enum PaymentStatus {
+    UNPAID
+    PAID
+    FAILED
+    CANCELED
+    REFUNDED
+}
+
+enum ShippingStatus {
+    PENDING
+    SHIPPED
+    DELIVERED
+    CANCELED
+    UNKNOWN
+}
+
 // Database
 model System {
     id       Settings @id @default(SERVER_SETTINGS)
@@ -38,9 +54,9 @@ model Products {
     title       String
     subtitle    String?
     description String
-    images      String
-    tags        String
-    price       Float
+    images      String // String[] - split by ","
+    tags        String // String[] - split by ","
+    price       Int // Amount in cents
     ratings     Ratings[]
     stock       Stock     @default(IN_STOCK)
     createdAt   DateTime  @default(now())
@@ -62,4 +78,23 @@ model Ratings {
     updatedAt   DateTime  @updatedAt
 
     @@unique([user, productID])
+}
+
+model Orders {
+    id            String         @id @default(uuid())
+    productID     String // String[] - split by ","
+    TransactionID String         @unique
+    userID        String
+    status        PaymentStatus  @default(UNPAID)
+    quantity      String // String[] - split by ","
+    amount        Int // Amount in cents
+    email         String
+    name          String
+    country       String
+    postal        String
+    shipping      ShippingStatus @default(UNKNOWN)
+    estshiptime   DateTime
+    createdAt     DateTime       @default(now())
+    updatedAt     DateTime       @updatedAt
+    expireAt      DateTime
 }
