@@ -1,5 +1,4 @@
 import { env } from "process";
-import { v4 as uuidv4 } from "uuid";
 import prisma from "@/server/data/prisma";
 import stripe from "@/server/data/stripe";
 
@@ -19,7 +18,6 @@ export default defineSafeEventHandler(async (evt) => {
     const body = await readBody<CartItem[]>(evt);
     const user = evt.context.token.sub;
 
-    const uuid = uuidv4();
     const products: CartItem[] = [];
     const checkout: CheckoutItem[] = [];
 
@@ -98,8 +96,8 @@ export default defineSafeEventHandler(async (evt) => {
     const session = await stripe.checkout.sessions.create({
         payment_method_types: ["card"],
         mode: "payment",
-        success_url: `${env.STRIPE_URL}/profile/orders/${uuid}`,
-        cancel_url: `${env.STRIPE_URL}/profile/orders/${uuid}?cancel=true`,
+        success_url: `${env.STRIPE_URL}/profile/orders/success`,
+        cancel_url: `${env.STRIPE_URL}/profile/orders/cancel`,
         line_items: checkout.map((c) => {
             return {
                 price_data: {
@@ -116,6 +114,7 @@ export default defineSafeEventHandler(async (evt) => {
         }),
     });
 
+    // Insert order into database
     const expire = new Date(0);
     const amount = session.amount_total || 0;
     const quantity = checkout.map((c) => c.amount).join(",");
@@ -125,7 +124,6 @@ export default defineSafeEventHandler(async (evt) => {
 
     const order = await prisma.orders.create({
         data: {
-            id: uuid,
             productID: ids,
             paymentID: session.id,
             transactionID: "",
@@ -134,7 +132,6 @@ export default defineSafeEventHandler(async (evt) => {
             quantity,
             amount,
             email: "",
-            name: "",
             country: "",
             postal: "",
             expireAt: expire,

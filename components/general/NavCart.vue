@@ -13,6 +13,7 @@
                 </div>
 
                 <button @click="clear">Clear Cart</button>
+                <!-- TODO -->
                 <NuxtLink to="/profile/checkout">Checkout</NuxtLink>
             </div>
             <div v-else>

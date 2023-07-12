@@ -90,7 +90,6 @@ model Orders {
     quantity      String // String[] - split by ","
     amount        Int // Amount in cents
     email         String
-    name          String
     country       String
     postal        String
     shipping      ShippingStatus @default(UNKNOWN)
