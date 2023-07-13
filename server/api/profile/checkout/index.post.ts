@@ -1,4 +1,5 @@
 import { env } from "process";
+import client from "@/server/data/redis";
 import prisma from "@/server/data/prisma";
 import stripe from "@/server/data/stripe";
 
@@ -16,8 +17,6 @@ interface CheckoutItem {
 
 export default defineSafeEventHandler(async (evt) => {
     const body = await readBody<CartItem[]>(evt);
-    const user = evt.context.token.sub;
-
     const products: CartItem[] = [];
     const checkout: CheckoutItem[] = [];
 
@@ -114,34 +113,19 @@ export default defineSafeEventHandler(async (evt) => {
         }),
     });
 
-    // Insert order into database
-    const expire = new Date(0);
-    const amount = session.amount_total || 0;
-    const quantity = checkout.map((c) => c.amount).join(",");
-    const ids = checkout.map((c) => c.id).join(",");
+    // Cache order
+    const check = {
+        user: evt.context.token.sub,
+        email: evt.context.auth.user.email,
+        ids: checkout.map((c) => c.id).join(","),
+        amount: session.amount_total || 0,
+        quantity: checkout.map((c) => c.amount).join(","),
+    };
 
-    expire.setUTCSeconds(session.expires_at);
-
-    const order = await prisma.orders.create({
-        data: {
-            productID: ids,
-            paymentID: session.id,
-            transactionID: "",
-            userID: user,
-            status: "UNPAID",
-            quantity,
-            amount,
-            email: "",
-            country: "",
-            postal: "",
-            expireAt: expire,
-        },
-
-        select: { id: true },
-    });
+    await client.set(`shop:checkout:${session.id}`, JSON.stringify(check));
+    await client.expireAt(`shop:checkout:${session.id}`, session.expires_at);
 
     return {
-        id: order.id,
         url: session.url,
         checkout,
     };

@@ -83,8 +83,7 @@ model Ratings {
 model Orders {
     id            String         @id @default(uuid())
     productID     String // String[] - split by ","
-    paymentID     String         @unique
-    transactionID String
+    transactionID String         @unique
     userID        String
     status        PaymentStatus  @default(UNPAID)
     quantity      String // String[] - split by ","
@@ -95,5 +94,4 @@ model Orders {
     shipping      ShippingStatus @default(UNKNOWN)
     createdAt     DateTime       @default(now())
     updatedAt     DateTime       @updatedAt
-    expireAt      DateTime
 }

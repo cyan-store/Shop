@@ -30,6 +30,7 @@
     "dependencies": {
         "@prisma/client": "^4.16.2",
         "pinia": "^2.1.4",
+        "redis": "^4.6.7",
         "stripe": "^12.12.0"
     }
 }
