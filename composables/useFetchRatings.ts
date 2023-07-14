@@ -13,22 +13,6 @@ export interface Stats {
     average: number;
 }
 
-// Return ratings preview
-export const useFetchRatingsPreview = async (id: string) => {
-    const { data, error } = await useFetch<Ratings[]>(
-        `/api/products/${id}/ratings`,
-        {
-            key: "ratings-" + String(id),
-        }
-    );
-
-    if (error.value) {
-        showError(error.value);
-    }
-
-    return data.value;
-};
-
 // Returns ratings based on stars
 export const useFetchRatings = async (
     id: string,
@@ -52,6 +36,22 @@ export const useFetchRatings = async (
     });
 
     return data;
+};
+
+// Return ratings preview
+export const useFetchRatingsPreview = async (id: string) => {
+    const { data, error } = await useFetch<Ratings[]>(
+        `/api/products/${id}/ratings`,
+        {
+            key: "ratings-" + String(id),
+        }
+    );
+
+    if (error.value) {
+        showError(error.value);
+    }
+
+    return data.value;
 };
 
 // Returns rating stats (average, total)

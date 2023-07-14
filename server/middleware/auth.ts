@@ -1,6 +1,11 @@
 import { getServerSession, getToken } from "#auth";
 
-const auth = ["/api/profile", "/api/profile/ratings", "/api/profile/checkout"];
+const auth = [
+    "/api/profile",
+    "/api/profile/ratings",
+    "/api/profile/checkout",
+    "/api/profile/orders",
+];
 
 export default defineEventHandler(async (evt) => {
     const session = await getServerSession(evt);
