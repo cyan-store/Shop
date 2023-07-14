@@ -1,6 +1,6 @@
+import redis from "@/server/data/redis";
 import prisma from "@/server/data/prisma";
 
-// TODO: Cache this
 export default defineSafeEventHandler(async (evt) => {
     const { id } = evt.context.params as { id: string };
     const total = [];
@@ -8,6 +8,13 @@ export default defineSafeEventHandler(async (evt) => {
     if (!evt.context.settings.ratings) {
         // Return nothing -> 404
         return;
+    }
+
+    // Attempt to load cached
+    const cached = await redis.get(`shop:stats:${id}`);
+
+    if (cached) {
+        return cached;
     }
 
     // Total ratings based on stars
@@ -48,5 +55,12 @@ export default defineSafeEventHandler(async (evt) => {
         },
     });
 
-    return { total, average: avg._avg.rating || 0 };
+    const data = {
+        total,
+        average: avg._avg.rating || 0,
+    };
+
+    // 2 hour cache
+    await redis.setEx(`shop:stats:${id}`, 60 * 60 * 2, JSON.stringify(data));
+    return data;
 });
