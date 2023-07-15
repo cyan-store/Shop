@@ -2,6 +2,8 @@
     <div>
         <h2>Orders List</h2>
         <ClientOnly>
+            <button @click="sortItem">{{ sort }}</button>
+
             <table>
                 <tr>
                     <td>Status</td>
@@ -42,12 +44,18 @@ import type { Orders } from "composables/useFetchOrders";
 definePageMeta({ middleware: ["auth", "purchase"] });
 
 const page = ref(0);
+const sort = ref("desc");
 const orders = ref<Orders[]>([]);
 
 const loadOrders = async () => {
-    orders.value = await useFetchOrders(page.value);
+    orders.value = await useFetchOrders(page.value, sort.value);
+};
+
+const sortItem = () => {
+    sort.value = sort.value === "asc" ? "desc" : "asc";
 };
 
 onMounted(loadOrders);
 watch(page, loadOrders);
+watch(sort, loadOrders);
 </script>

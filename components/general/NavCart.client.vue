@@ -8,11 +8,11 @@
                 <div v-for="item in cart.items" :key="item.id">
                     <h2>{{ item.title }} - {{ item.subtitle }}</h2>
                     <p>{{ item.price }} | x{{ item.amount }}</p>
-                    <button @click="cart.remove(item.id)">Remove</button>
+
+                    <UiItemManager :id="item.id" />
                     <hr />
                 </div>
 
-                <button @click="clear">Clear Cart</button>
                 <!-- TODO -->
                 <NuxtLink to="/profile/checkout">Checkout</NuxtLink>
             </div>
@@ -30,10 +30,4 @@
 const cart = useCart();
 const settings = useSettings();
 const dialog = ref(false);
-
-const clear = () => {
-    if (confirm("Are you sure?")) {
-        cart.clear();
-    }
-};
 </script>

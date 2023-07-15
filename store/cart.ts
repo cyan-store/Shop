@@ -1,4 +1,4 @@
-interface CartItem {
+export interface CartItem {
     id: string;
     title: string;
     subtitle: string;
@@ -27,6 +27,20 @@ export const useCart = defineStore("cart", () => {
         items.value[inc].amount++;
     };
 
+    const sub = (item: CartItem) => {
+        const inc = includes(item.id);
+
+        if (inc === -1) {
+            return;
+        }
+
+        items.value[inc].amount--;
+
+        if (items.value[inc].amount <= 0) {
+            remove(item.id);
+        }
+    };
+
     onMounted(() => {
         const cart = localStorage.getItem("user-cart");
 
@@ -42,5 +56,5 @@ export const useCart = defineStore("cart", () => {
         items.value = JSON.parse(cart);
     });
 
-    return { items, add, remove, includes, clear };
+    return { items, add, sub, remove, includes, clear };
 });

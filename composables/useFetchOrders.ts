@@ -42,8 +42,8 @@ export interface OrderInfo {
 }
 
 // Get a user's orders
-export const useFetchOrders = async (page = 0) => {
-    const query = new URLSearchParams({ page: String(page) });
+export const useFetchOrders = async (page = 0, sort = "desc") => {
+    const query = new URLSearchParams({ page: String(page), sort });
     const data = await $fetch<Orders[]>(
         `/api/profile/orders?${query.toString()}`,
         {

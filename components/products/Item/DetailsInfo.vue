@@ -4,8 +4,10 @@
         <pre>{{ props }}</pre>
 
         <div v-if="canCart">
-            <button @click="add">Add to cart {{ amount }}</button>
-            <button v-if="amount" @click="cart.remove(props.id)">Remove</button>
+            <ClientOnly>
+                <button @click="add">Add to cart {{ amount }}</button>
+                <UiItemManager v-if="amount" :id="props.id" />
+            </ClientOnly>
         </div>
     </div>
 </template>
