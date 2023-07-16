@@ -1,6 +1,12 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-    modules: ["@sidebase/nuxt-auth", "nuxt-rating", "@pinia/nuxt"],
+    modules: [
+        "@sidebase/nuxt-auth",
+        "nuxt-rating",
+        "@pinia/nuxt",
+        "@nuxtjs/tailwindcss",
+    ],
+
     imports: { dirs: ["./store"] },
     devtools: { enabled: false },
 
