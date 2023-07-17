@@ -74,7 +74,7 @@
 
         <div class="navbar-center">
             <NuxtLink class="navbar-item" to="/">
-                <b class="font-bold text-xl">Shop</b>
+                <b class="font-bold text-xl">{{ shopName }}</b>
             </NuxtLink>
         </div>
 
@@ -125,6 +125,7 @@ const { signIn, signOut, status, data } = useAuth();
 
 const settings = useSettings();
 const cart = useCart();
+const shopName = computed(() => import.meta.env.VITE_SHOP);
 const auth = computed(() => status.value === "authenticated");
 const isFatal = computed(() => settings.state === "FATAL");
 
