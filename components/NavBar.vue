@@ -1,5 +1,5 @@
 <template>
-    <div v-if="!isFatal" class="navbar rounded-lg">
+    <div v-if="!isFatal" class="navbar navbar-floating sticky rounded-lg">
         <div class="navbar-start">
             <div v-if="auth" class="avatar avatar-ring avatar-md">
                 <div class="dropdown-container">
@@ -11,6 +11,22 @@
                             <img :src="data?.user?.image || ''" alt="avatar" />
                         </label>
                         <div class="dropdown-menu dropdown-menu-bottom-right">
+                            <NuxtLink
+                                to="/"
+                                class="dropdown-item text-sm md:hidden inline"
+                            >
+                                Home
+                            </NuxtLink>
+
+                            <NuxtLink
+                                to="/products"
+                                class="dropdown-item text-sm md:hidden inline"
+                            >
+                                Products
+                            </NuxtLink>
+
+                            <hr class="md:hidden inline" />
+
                             <NuxtLink
                                 to="/profile"
                                 class="dropdown-item text-sm"
@@ -33,12 +49,25 @@
                             >
                                 Ratings
                             </NuxtLink>
+
+                            <hr class="md:hidden inline" />
+                            <a
+                                class="dropdown-item text-sm md:hidden inline"
+                                @click="logout"
+                            >
+                                Logout
+                            </a>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <NuxtLink to="/products" class="navbar-item">
+            <!-- Hide if auth and md -->
+            <NuxtLink
+                to="/products"
+                class="navbar-item"
+                :class="{ 'md:inline hidden': auth }"
+            >
                 <BuildingStorefrontIcon class="h-6 w-6" />
             </NuxtLink>
         </div>
@@ -53,17 +82,30 @@
             <template v-if="auth">
                 <GeneralNavCart />
 
-                <div class="navbar-item" @click="logout">
+                <div class="navbar-item md:inline hidden" @click="logout">
                     <ArrowRightOnRectangleIcon class="h-6 w-6" />
                 </div>
             </template>
             <template v-else>
-                <div class="navbar-item" @click="signIn('auth0')">
+                <div
+                    class="navbar-item md:inline hidden"
+                    @click="signIn('auth0')"
+                >
                     <UserPlusIcon class="h-6 w-6" />
                 </div>
 
-                <div class="navbar-item" @click="signIn('auth0')">
+                <div
+                    class="navbar-item md:inline hidden"
+                    @click="signIn('auth0')"
+                >
                     <ArrowLeftOnRectangleIcon class="h-6 w-6" />
+                </div>
+
+                <div
+                    class="navbar-item md:hidden inline"
+                    @click="signIn('auth0')"
+                >
+                    <UserGroupIcon class="h-6 w-6" />
                 </div>
             </template>
         </div>
@@ -74,6 +116,7 @@
 import {
     ArrowLeftOnRectangleIcon,
     UserPlusIcon,
+    UserGroupIcon,
     BuildingStorefrontIcon,
     ArrowRightOnRectangleIcon,
 } from "@heroicons/vue/24/outline";
