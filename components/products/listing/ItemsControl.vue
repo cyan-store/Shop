@@ -23,9 +23,11 @@
                 <button
                     v-for="f in filters"
                     :key="f"
-                    :class="`btn-${
-                        options.order === f ? 'solid' : 'outline'
-                    }-secondary`"
+                    :class="`${
+                        options.order === f
+                            ? 'btn-solid-secondary'
+                            : 'btn-outline-secondary'
+                    }`"
                     class="btn mr-2"
                     @click="setFilter(f)"
                 >
