@@ -14,16 +14,17 @@ export const useFetchProducts = async (
         sort,
     });
 
-    const products = await $fetch<Products[]>("/api/products?" + query).catch(
-        (e) => {
-            showError({
-                statusCode: e.statusCode,
-                statusMessage: e.statusMessage,
-            });
+    const products = await $fetch<{
+        count: number;
+        data: Products[];
+    }>("/api/products?" + query).catch((e) => {
+        showError({
+            statusCode: e.statusCode,
+            statusMessage: e.statusMessage,
+        });
 
-            return [];
-        }
-    );
+        return { count: 0, data: [] };
+    });
 
     return products;
 };

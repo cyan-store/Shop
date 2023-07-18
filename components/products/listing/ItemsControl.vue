@@ -51,11 +51,6 @@
                 class="spinner-simple md:inline-block md:float-right m-auto block my-4 w-8 h-8"
             ></div>
         </div>
-
-        <UiPaginateInput
-            v-model="page"
-            @clicked="emit('search', page, options)"
-        />
     </div>
 </template>
 
@@ -63,9 +58,11 @@
 type FilterType = "any" | "title" | "date" | "price" | "rating";
 
 const filters = ["any", "title", "date", "price", "rating"];
-const props = defineProps<{ loading: boolean }>();
+const props = defineProps<{
+    loading: boolean;
+    paginate: number;
+}>();
 
-const page = ref(0);
 const options = reactive({
     search: "",
     order: "any" as FilterType,
@@ -73,7 +70,7 @@ const options = reactive({
 });
 
 const emit = defineEmits<{
-    (e: "search", page: number, values: typeof options): void;
+    (e: "search", page: number, values: typeof options, reset: boolean): void;
 }>();
 
 const setFilter = (filter: string) => {
@@ -87,8 +84,12 @@ const getFilter = (filter: string) => {
     );
 };
 
-watch(options, () => {
-    emit("search", 0, options);
-    page.value = 0;
-});
+watch(
+    () => props.paginate,
+    () => {
+        emit("search", props.paginate, options, false);
+    }
+);
+
+watch(options, () => emit("search", 0, options, true));
 </script>

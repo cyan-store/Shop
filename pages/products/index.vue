@@ -9,6 +9,7 @@
 
         <ProductsListingItemsControl
             :loading="loading"
+            :paginate="paginate"
             @search="searchProducts"
         />
 
@@ -30,6 +31,8 @@
             />
         </div>
 
+        <UiLoadMore :disabled="paginate * 16 > count" @clicked="paginate++" />
+
         <div v-if="!products.length" class="my-20">
             <h2 v-if="!loading" class="text-center text-4xl italic opacity-60">
                 Nothing Found!
@@ -46,6 +49,8 @@ definePageMeta({ layout: "margin" });
 
 const products = ref([] as Products[]);
 const loading = ref(true);
+const count = ref(0);
+const paginate = ref(0);
 
 const order = computed(() =>
     Object.keys(products.value).map((n) => parseInt(n))
@@ -57,9 +62,14 @@ const searchProducts = async (
         search: string;
         order: "any" | "title" | "date" | "price" | "rating";
         sort: "asc" | "desc";
-    }
+    },
+    reset?: boolean
 ) => {
     loading.value = true;
+
+    if (page !== undefined) {
+        paginate.value = page;
+    }
 
     const res = await useFetchProducts(
         page || 0,
@@ -68,9 +78,20 @@ const searchProducts = async (
         options?.sort || "asc"
     );
 
-    products.value = res;
+    if (!reset) {
+        const full = [...products.value, ...res.data];
+        const ids = full.map((n) => n.id);
+
+        products.value = full.filter(
+            (item, pos) => ids.indexOf(item.id) === pos
+        );
+    } else {
+        products.value = res.data;
+    }
+
+    count.value = res.count;
     loading.value = false;
 };
 
-onMounted(() => searchProducts());
+onMounted(searchProducts);
 </script>

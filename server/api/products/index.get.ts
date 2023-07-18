@@ -92,5 +92,17 @@ export default defineSafeEventHandler(async (evt) => {
     }
 
     // Query request
-    return await prisma.products.findMany(options as any);
+    const count = await prisma.products.aggregate({
+        where: {
+            stock: "IN_STOCK",
+        },
+
+        _count: true,
+    });
+
+    return {
+        count: count._count,
+
+        data: await prisma.products.findMany(options as any),
+    };
 });
