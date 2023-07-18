@@ -1,3 +1,3 @@
-export const PRODUCTS = 5;
+export const PRODUCTS = 16;
 export const RATINGS = 4;
 export const ORDERS = 10;

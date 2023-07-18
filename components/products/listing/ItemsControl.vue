@@ -19,7 +19,7 @@
         </div>
 
         <div class="my-2">
-            <div class="hidden md:block">
+            <div class="hidden md:inline-block">
                 <button
                     v-for="f in filters"
                     :key="f"
@@ -48,7 +48,7 @@
 
             <div
                 v-if="props.loading"
-                class="spinner-simple float-right mr-1 mt-1 w-8 h-8"
+                class="spinner-simple md:inline-block md:float-right m-auto block my-4 w-8 h-8"
             ></div>
         </div>
 
@@ -69,7 +69,7 @@ const page = ref(0);
 const options = reactive({
     search: "",
     order: "any" as FilterType,
-    sort: "desc" as "asc" | "desc",
+    sort: "asc" as "asc" | "desc",
 });
 
 const emit = defineEmits<{

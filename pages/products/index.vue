@@ -17,16 +17,16 @@
             :class="{ 'opacity-60': loading }"
         >
             <ProductsListingItemsCard
-                v-for="product in products"
-                :id="product.id"
-                :key="product.id"
-                :title="product.title"
-                :subtitle="product.subtitle"
-                :description="product.description"
-                :images="product.images"
-                :tags="product.tags"
-                :price="product.price"
-                :stock="product.stock"
+                v-for="i in order"
+                :id="products[i].id"
+                :key="i"
+                :title="products[i].title"
+                :subtitle="products[i].subtitle"
+                :description="products[i].description"
+                :images="products[i].images"
+                :tags="products[i].tags"
+                :price="products[i].price"
+                :stock="products[i].stock"
             />
         </div>
 
@@ -46,6 +46,10 @@ definePageMeta({ layout: "margin" });
 
 const products = ref([] as Products[]);
 const loading = ref(true);
+
+const order = computed(() =>
+    Object.keys(products.value).map((n) => parseInt(n))
+);
 
 const searchProducts = async (
     page?: number,
