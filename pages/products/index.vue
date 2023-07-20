@@ -31,13 +31,13 @@
             />
         </div>
 
-        <UiLoadMore :disabled="paginate * 16 > count" @clicked="paginate++" />
-
-        <div v-if="!products.length" class="my-20">
-            <h2 v-if="!loading" class="text-center text-4xl italic opacity-60">
+        <div v-if="!products.length && !loading" class="my-20">
+            <h2 class="text-center text-4xl italic opacity-60">
                 Nothing Found!
             </h2>
         </div>
+
+        <UiLoadMore :disabled="paginate * 16 > count" @clicked="paginate++" />
     </div>
 </template>
 

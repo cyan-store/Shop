@@ -1,13 +1,17 @@
 <template>
-    <div>
-        <h2>{{ props.title }}</h2>
-        <pre>{{ props }}</pre>
+    <div class="flex">
+        <div class="flex-1"></div>
 
-        <div v-if="canCart">
-            <ClientOnly>
-                <button @click="add">Add to cart {{ amount }}</button>
-                <UiItemManager v-if="amount" :id="props.id" />
-            </ClientOnly>
+        <div class="flex-1">
+            <h2>{{ props.title }}</h2>
+            <pre>{{ props }}</pre>
+
+            <div v-if="canCart">
+                <ClientOnly>
+                    <button @click="add">Add to cart {{ amount }}</button>
+                    <UiItemManager v-if="amount" :id="props.id" />
+                </ClientOnly>
+            </div>
         </div>
     </div>
 </template>

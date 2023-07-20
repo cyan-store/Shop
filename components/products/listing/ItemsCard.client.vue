@@ -12,7 +12,7 @@
             </h4>
 
             <p class="text-content2">
-                {{ description }}
+                {{ desc }}
             </p>
 
             <div class="card-footer">
@@ -25,7 +25,7 @@
 </template>
 
 <script lang="ts" setup>
-defineProps<{
+const props = defineProps<{
     id: string;
     title: string;
     subtitle: string | null;
@@ -37,4 +37,20 @@ defineProps<{
 }>();
 
 const settings = useSettings();
+const desc = computed(() => props.description.replace(/(.{50})..+/, "$1..."));
 </script>
+
+<style scoped>
+.card-body {
+    height: 100%;
+}
+.text-content2 {
+    height: 100%;
+}
+
+@media (max-width: 640px) {
+    .card-footer .btn {
+        width: 100%;
+    }
+}
+</style>
