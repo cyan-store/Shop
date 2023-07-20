@@ -26,4 +26,7 @@
 const route = useRoute();
 const settings = useSettings();
 const data = await useFetchProductID(String(route.params.id));
+
+definePageMeta({ layout: "margin" });
+useHead({ title: useTitle(data?.title || "Product") });
 </script>

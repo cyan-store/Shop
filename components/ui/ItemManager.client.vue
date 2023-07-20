@@ -1,12 +1,15 @@
 <template>
     <div>
-        <div>
-            <button :disabled="max" @click="add">+</button>
-            <span>{{ count }}</span>
-            <button @click="sub">-</button>
-        </div>
+        <button class="btn btn-solid-primary" :disabled="max" @click="add">
+            +
+        </button>
 
-        <button @click="cart.remove(id)">Remove</button>
+        <span class="text-lg mx-3">{{ count }}x</span>
+        <button class="btn btn-solid-primary" @click="sub">-</button>
+
+        <button class="ml-2 btn btn-solid-secondary" @click="cart.remove(id)">
+            Remove
+        </button>
     </div>
 </template>
 
