@@ -18,6 +18,7 @@
         <ProductsItemRatingsPreview
             v-if="settings.ratings"
             :id="String(route.params.id)"
+            :stock="data.stock"
         />
     </div>
 </template>

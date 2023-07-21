@@ -3,7 +3,7 @@
         <textarea
             v-model="review"
             placeholder="Write a review... (optional)"
-            maxlength="500"
+            maxlength="149"
         ></textarea>
 
         <NuxtRating

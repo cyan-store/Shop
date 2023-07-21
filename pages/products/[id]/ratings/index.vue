@@ -19,7 +19,7 @@
                 :name="rating.name"
                 :description="rating.description"
                 :rating="rating.rating"
-                :created-at="String(rating.rating)"
+                :created-at="String(rating.createdAt)"
             />
 
             <div v-if="!data.length">
