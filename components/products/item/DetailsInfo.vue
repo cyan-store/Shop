@@ -39,7 +39,10 @@
             <div>
                 <p>{{ props.description }}</p>
                 <h4 class="text-sm mt-4 opacity-60">
-                    {{ props.createdAt }} | {{ props.updatedAt }}
+                    <span title="Created at">{{ created }}</span>
+                    <span title="Updated at">
+                        {{ updated === created ? "" : " | " + updated }}
+                    </span>
                 </h4>
             </div>
 
@@ -81,6 +84,7 @@ import type { Stock } from "@prisma/client";
 import type { Stats } from "@/composables/useFetchRatings";
 
 const { status } = useAuth();
+const { $moment } = useNuxtApp();
 
 const props = defineProps<{
     id: string;
@@ -106,6 +110,9 @@ if (settings.ratings) {
         ratingStats.value = res;
     }
 }
+
+const created = computed(() => $moment(props.createdAt).format("MMMM Do YYYY"));
+const updated = computed(() => $moment(props.updatedAt).format("MMMM Do YYYY"));
 
 const totalRatings = computed(() => {
     if (!ratingStats.value?.total) return 0;

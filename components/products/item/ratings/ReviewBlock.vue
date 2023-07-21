@@ -9,7 +9,9 @@
                 <p v-else class="italic font-bold">No content provided.</p>
 
                 <hr class="my-4" />
-                <p class="text-sm opacity-60 float-right">{{ createdAt }}</p>
+                <p class="text-sm opacity-60 float-right">
+                    {{ $moment(createdAt).format("MMMM Do YYYY h:mm a") }}
+                </p>
             </div>
         </div>
     </div>
@@ -21,6 +23,8 @@ defineProps<{
     name: string;
     description: string | null;
     rating: number;
-    createdAt: string; // TODO: Update dates
+    createdAt: string;
 }>();
+
+const { $moment } = useNuxtApp();
 </script>

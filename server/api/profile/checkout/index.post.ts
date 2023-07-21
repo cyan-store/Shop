@@ -105,7 +105,7 @@ export default defineSafeEventHandler(async (evt) => {
                         name: c.title,
                     },
 
-                    unit_amount: c.price, // TODO: Convert the price in UI
+                    unit_amount: c.price,
                 },
 
                 quantity: c.amount,
