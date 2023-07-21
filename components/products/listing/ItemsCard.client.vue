@@ -7,7 +7,9 @@
             </NuxtLink>
 
             <h4 class="card-header text-sm opacity-60">
-                {{ subtitle ? subtitle + " | " : "" }} ${{ price / 100 }}
+                {{ subtitle ? subtitle + " | " : "" }} ${{
+                    (price / 100).toFixed(2)
+                }}
                 {{ settings.currency }}
             </h4>
 

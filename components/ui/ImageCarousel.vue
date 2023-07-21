@@ -95,7 +95,7 @@ watch(idx, load);
 <style scoped>
 .bg-img {
     min-height: 280px;
-    max-height: 450px;
+    max-height: 400px;
 
     background-size: cover;
     background-repeat: no-repeat;

@@ -4,7 +4,7 @@
             +
         </button>
 
-        <span class="text-lg mx-3">{{ count }}x</span>
+        <span class="text-lg mx-3 select-none">{{ count }}x</span>
         <button class="btn btn-solid-primary" @click="sub">-</button>
 
         <button class="ml-2 btn btn-solid-secondary" @click="cart.remove(id)">

@@ -18,7 +18,9 @@
 
         <div>
             <h3>Cost:</h3>
-            <div>${{ props.amount / 100 }} ({{ settings.currency }})</div>
+            <div>
+                ${{ (props.amount / 100).toFixed(2) }} ({{ settings.currency }})
+            </div>
             <!-- TODO: Convert currency -->
         </div>
     </div>

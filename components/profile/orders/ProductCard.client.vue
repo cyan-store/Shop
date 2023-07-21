@@ -2,7 +2,7 @@
     <div v-if="id !== '0'">
         <h4>
             <NuxtLink :to="'/products/' + id">
-                {{ title }} | ${{ price / 100 }}
+                {{ title }} | ${{ (price / 100).toFixed(2) }}
             </NuxtLink>
             x{{ amount }}
         </h4>

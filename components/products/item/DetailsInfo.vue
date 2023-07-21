@@ -1,15 +1,18 @@
 <template>
-    <div class="details-info flex py-10">
-        <div class="flex-1 lg:flex hidden items-center justify-center">
+    <div class="details-info flex py-10 mb-10">
+        <div class="flex-1 lg:flex hidden justify-center">
             <UiImageCarousel />
         </div>
 
-        <div class="flex-1 leading-8">
-            <!-- Mobile image -->
-            <img
-                src="https://source.unsplash.com/random/300x200"
-                class="lg:hidden block"
-            />
+        <div class="flex-1 lg:leading-8">
+            <div class="lg:hidden mb-4">
+                <!-- Mobile -->
+                <div class="flex items-center h-[280px] justify-center">
+                    <UiImageCarousel />
+                </div>
+
+                <hr class="mt-5" />
+            </div>
 
             <div class="mb-4">
                 <h2 class="md:text-6xl text-4xl">{{ props.title }}</h2>
@@ -18,31 +21,56 @@
                 </h4>
             </div>
 
-            <div class="my-2">
-                <h2>User Ratings</h2>
-                <NuxtRating />
+            <div v-if="settings.ratings" class="my-2">
+                <h2>User Ratings ({{ totalRatings }}x)</h2>
+                <NuxtRating :rating-value="ratingStats?.average || 0" />
             </div>
 
+            <hr class="my-4" />
             <div>
-                <hr class="my-4" />
+                <span class="text-xl">{{ productStock }}</span>
+                <span class="font-bold text-xl">
+                    ${{ (props.price / 100).toFixed(2) }}
+                    {{ settings.currency }}
+                </span>
+            </div>
+
+            <hr class="my-4" />
+            <div>
                 <p>{{ props.description }}</p>
+                <h4 class="text-sm mt-4 opacity-60">
+                    {{ props.createdAt }} | {{ props.updatedAt }}
+                </h4>
+            </div>
+
+            <hr class="my-4" />
+            <div v-if="tags">
+                <div
+                    v-for="tag in productTags"
+                    :key="tag"
+                    :disabled="true"
+                    class="btn btn-rounded btn-secondary font-bold mr-1"
+                >
+                    #{{ tag }}
+                </div>
+
                 <hr class="my-4" />
             </div>
 
-            <div v-if="canCart">
+            <div v-if="canCart" class="lg:text-left text-center">
                 <ClientOnly>
                     <UiItemManager v-if="amount" :id="props.id" />
-                    <button v-else class="btn btn-solid-primary" @click="add">
+                    <button
+                        v-else
+                        class="btn btn-solid-primary w-full sm:w-auto"
+                        @click="add"
+                    >
                         Add to cart
                     </button>
                 </ClientOnly>
             </div>
-            <h2
-                v-else
-                class="text-center text-2xl mt-10 italic opacity-60 hover:underline"
-                @click="signIn('auth0')"
-            >
-                You must be logged in to purchase!
+            <h2 v-else class="text-center text-2xl mt-10 italic opacity-60">
+                {{ cannotPurchaseReason }}
             </h2>
         </div>
     </div>
@@ -50,8 +78,9 @@
 
 <script lang="ts" setup>
 import type { Stock } from "@prisma/client";
+import type { Stats } from "@/composables/useFetchRatings";
 
-const { signIn } = useAuth();
+const { status } = useAuth();
 
 const props = defineProps<{
     id: string;
@@ -66,9 +95,22 @@ const props = defineProps<{
     updatedAt: string;
 }>();
 
-const { status } = useAuth();
 const settings = useSettings();
 const cart = useCart();
+const ratingStats = ref<Stats>();
+
+if (settings.ratings) {
+    const res = await useFetchRatingsStats(props.id);
+
+    if (res) {
+        ratingStats.value = res;
+    }
+}
+
+const totalRatings = computed(() => {
+    if (!ratingStats.value?.total) return 0;
+    return ratingStats.value.total.reduce((s, a) => s + a, 0);
+});
 
 const canCart = computed(() => {
     return (
@@ -76,6 +118,18 @@ const canCart = computed(() => {
         status.value === "authenticated" &&
         props.stock === "IN_STOCK"
     );
+});
+
+const cannotPurchaseReason = computed(() => {
+    if (settings.state === "NOPURCHASE") {
+        return "";
+    } else if (props.stock !== "IN_STOCK") {
+        return "Product is out of stock!";
+    } else if (status.value !== "authenticated") {
+        return "You must be logged in to purchase!";
+    }
+
+    return "";
 });
 
 const amount = computed(() => {
@@ -86,6 +140,16 @@ const amount = computed(() => {
     }
 
     return "x" + cart.items[inc].amount;
+});
+
+const productTags = computed(() => props.tags.split(","));
+const productStock = computed(() => {
+    return {
+        IN_STOCK: "In stock -",
+        OUT_STOCK: "Out of stock! -",
+        DISCONTINUED: "Discontinued -",
+        HIDDEN: "",
+    }[props.stock];
 });
 
 const add = () => {
