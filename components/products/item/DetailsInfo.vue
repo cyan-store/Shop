@@ -22,7 +22,7 @@
             </div>
 
             <div v-if="settings.ratings" class="my-2">
-                <h2>User Ratings ({{ totalRatings }}x)</h2>
+                <h2 class="opacity-60">User Ratings ({{ totalRatings }}x)</h2>
                 <NuxtRating :rating-value="ratingStats?.average || 0" />
             </div>
 

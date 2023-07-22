@@ -1,63 +1,70 @@
 <template>
-    <div>
-        <h2>{{ route.params.id }}</h2>
+    <div class="lg:grid block grid-cols-4 gap-4">
+        <ProductsItemRatingsStarControl
+            :id="String(route.params.id)"
+            v-model="star"
+            :stock="String(product?.stock)"
+            :loading="loading"
+            @switched="filter"
+            @reset="page = 0"
+        />
 
-        <div>
-            <ProductsItemRatingsStarControl
-                :id="String(route.params.id)"
-                v-model="star"
-                @switched="filter"
-            />
-            <UiPaginateInput v-model="page" />
-        </div>
+        <div v-if="data" class="col-span-3">
+            <ClientOnly>
+                <ProductsItemRatingsReviewBlock
+                    v-for="rating in data"
+                    :id="rating.id"
+                    :key="rating.id"
+                    :name="rating.name"
+                    :description="rating.description"
+                    :rating="rating.rating"
+                    :created-at="String(rating.createdAt)"
+                />
 
-        <div v-if="data">
-            <ProductsItemRatingsReviewBlock
-                v-for="rating in data"
-                :id="rating.id"
-                :key="rating.id"
-                :name="rating.name"
-                :description="rating.description"
-                :rating="rating.rating"
-                :created-at="String(rating.createdAt)"
-            />
+                <div
+                    v-if="loading"
+                    class="spinner-simple mx-auto lg:my-[200px] my-[100px]"
+                ></div>
+                <h2
+                    v-else-if="!data.length"
+                    class="text-center text-3xl lg:my-[200px] my-[100px] italic opacity-60"
+                >
+                    <h2>No ratings found!</h2>
+                </h2>
+            </ClientOnly>
 
-            <div v-if="!data.length">
-                <h2>Nothing here</h2>
+            <div class="text-center">
+                <UiPaginateInput v-model="page" />
+                <NuxtLink
+                    class="btn btn-solid-secondary lg:hidden w-full"
+                    :to="'/products/' + route.params.id"
+                >
+                    Back
+                </NuxtLink>
             </div>
         </div>
-
-        <div v-if="product?.stock !== 'DISCONTINUED'">
-            <NuxtLink
-                v-if="auth"
-                :to="`/products/${route.params.id}/ratings/create`"
-            >
-                Leave a rating
-            </NuxtLink>
-            <a v-else>You must be logged in to leave a rating!</a>
-        </div>
-
-        <br />
-
-        <NuxtLink :to="'/products/' + route.params.id">Back</NuxtLink>
     </div>
 </template>
 
 <script lang="ts" setup>
 import type { Ratings } from "@prisma/client";
 
-definePageMeta({ middleware: "rating" });
-
-const { status } = useAuth();
 const route = useRoute();
-
 const product = await useFetchProductID(String(route.params.id));
-const auth = computed(() => status.value === "authenticated");
+
+definePageMeta({
+    middleware: "rating",
+    layout: "margin",
+});
+
 const data = ref<Ratings[]>([]);
+const loading = ref(false);
 const star = ref("0");
 const page = ref(0);
 
 const filter = async () => {
+    loading.value = true;
+
     const res = await useFetchRatings(
         String(route.params.id),
         page.value,
@@ -65,6 +72,7 @@ const filter = async () => {
     );
 
     data.value = JSON.parse(JSON.stringify(res));
+    loading.value = false;
 };
 
 watch(page, filter);
@@ -74,4 +82,5 @@ watch(star, () => {
 });
 
 onMounted(filter);
+useHead({ title: useTitle(`${product?.title || "Product"} - Ratings`) });
 </script>

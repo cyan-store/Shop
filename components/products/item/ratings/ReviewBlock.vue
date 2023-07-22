@@ -1,5 +1,5 @@
 <template>
-    <div class="card my-4 max-w-[85%] m-auto">
+    <div class="card mb-4 max-w-full m-auto">
         <div class="card-body">
             <h2 class="card-header">{{ name }}</h2>
             <NuxtRating class="my-2" :rating-value="rating" rating-size="8" />
@@ -9,7 +9,7 @@
                 <p v-else class="italic font-bold">No content provided.</p>
 
                 <hr class="my-4" />
-                <p class="text-sm opacity-60 float-right">
+                <p class="text-sm opacity-60 sm:text-right text-center">
                     {{ $moment(createdAt).format("MMMM Do YYYY h:mm a") }}
                 </p>
             </div>
