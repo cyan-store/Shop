@@ -1,15 +1,41 @@
 <template>
     <div v-if="rating.name">
-        <h2>{{ rating.name }}</h2>
-        <textarea v-model="rating.description" readonly></textarea>
-        <h4>{{ rating.stars }}* | {{ rating.createdAt }}</h4>
+        <h2 class="sm:text-xl my-4">Previous Rating:</h2>
+        <textarea
+            v-if="rating.description != ''"
+            v-model="rating.description"
+            class="textarea textarea-solid resize-none"
+            readonly
+        ></textarea>
+        <textarea
+            v-else
+            class="textarea textarea-solid resize-none italic font-bold"
+            value="No content provided."
+            readonly
+        ></textarea>
 
-        <button @click="removeRating">Delete Current Rating</button>
-        <hr />
+        <div class="flex my-2">
+            <NuxtRating class="flex-1" :rating-value="rating.stars" />
+
+            <div class="opacity-60 text-sm hidden sm:inline">
+                {{ $moment(rating.createdAt).format("MMMM Do YYYY h:mm a") }}
+            </div>
+        </div>
+
+        <div class="text-right">
+            <button
+                class="btn btn-solid-error w-full sm:w-auto"
+                @click="removeRating"
+            >
+                Delete Current Rating
+            </button>
+        </div>
     </div>
 </template>
 
 <script lang="ts" setup>
+const { $moment } = useNuxtApp();
+
 const props = defineProps<{
     id: string;
     modelValue: boolean;

@@ -1,21 +1,41 @@
 <template>
     <div>
+        <template v-if="props.rating">
+            <hr class="my-10" />
+            <h2 class="sm:text-xl my-4">
+                Please remove your current rating to write a new one!
+            </h2>
+        </template>
+
         <textarea
             v-model="review"
+            class="textarea textarea-solid resize-none"
             placeholder="Write a review... (optional)"
             maxlength="149"
         ></textarea>
 
-        <NuxtRating
-            :read-only="false"
-            :rating-value="stars"
-            @rating-selected="(n: number) => (stars = n)"
-        />
+        <div class="flex my-2">
+            <NuxtRating
+                class="flex-1"
+                :read-only="false"
+                :rating-value="stars"
+                @rating-selected="(n: number) => (stars = n)"
+            />
 
-        <h4 v-if="props.rating">
-            Please remove your current rating to write a new one!
-        </h4>
-        <button :disabled="disabled" @click="rate">Submit</button>
+            <div class="opacity-60 text-sm hidden sm:inline">
+                {{ review.length }} / 150
+            </div>
+        </div>
+
+        <div class="text-right">
+            <button
+                class="btn btn-solid-primary w-full sm:w-auto"
+                :disabled="disabled"
+                @click="rate"
+            >
+                Submit
+            </button>
+        </div>
     </div>
 </template>
 
