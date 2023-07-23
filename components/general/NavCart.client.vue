@@ -1,7 +1,10 @@
 <template>
     <template v-if="allowCart">
-        <div class="navbar-item" @click="() => (dialog = !dialog)">
+        <div class="navbar-item relative" @click="() => (dialog = !dialog)">
             <ShoppingCartIcon class="h-6 w-6" />
+            <button v-if="cart.items.length" class="btn bg-error cart-icon">
+                {{ cartLen }}
+            </button>
         </div>
 
         <input
@@ -67,7 +70,30 @@ const dialog = ref(false);
 const hasItems = computed(() => !!cart.items.length);
 const allowCart = computed(() => settings.state !== "NOPURCHASE");
 
+const cartLen = computed(() => {
+    if (cart.items.length > 9) {
+        return "9+";
+    }
+
+    return cart.items.length;
+});
+
 const checkout = () => {
     router.push("/profile/checkout");
 };
 </script>
+
+<style scoped>
+.cart-icon {
+    color: #fff;
+    border-radius: 100%;
+    padding: 0;
+    width: 18px;
+    height: 18px;
+    font-size: 0.8em;
+    font-weight: bolder;
+    position: absolute;
+    bottom: calc(100% - 25px + 5px);
+    left: calc(100% - 25px + 5px);
+}
+</style>

@@ -17,9 +17,14 @@
             </h4>
 
             <div class="text-content2">
-                <p class="my-8 font-bold mx-4">
-                    ${{ (price / 100).toFixed(2) }} ({{ settings.currency }})
-                </p>
+                <div class="my-8">
+                    <span class="font-bold">Price:</span>
+                    <span>
+                        ${{ (price / 100).toFixed(2) }} ({{
+                            settings.currency
+                        }})
+                    </span>
+                </div>
 
                 <UiItemManager :id="id" />
             </div>

@@ -1,7 +1,7 @@
 <template>
     <div>
-        <h2>{{ status }}</h2>
         <pre>{{ data }}</pre>
+        <ProfileUserInfo />
 
         <NuxtLink v-if="settings.ratings" to="/profile/ratings">
             Ratings
@@ -13,8 +13,13 @@
 </template>
 
 <script lang="ts" setup>
-definePageMeta({ middleware: "auth" });
+definePageMeta({
+    layout: "margin",
+    middleware: "auth",
+});
 
-const { status, data } = useAuth();
+const { data } = useAuth();
 const settings = useSettings();
+
+useHead({ title: useTitle(`${data.value?.user?.name}'s Profile'`) });
 </script>

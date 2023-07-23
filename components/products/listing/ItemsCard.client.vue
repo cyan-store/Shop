@@ -2,7 +2,10 @@
     <div class="card card-image-cover m-auto sm:m-0">
         <img src="https://source.unsplash.com/random/300x200" />
         <div class="card-body">
-            <NuxtLink :to="'/products/' + id" class="card-header">
+            <NuxtLink
+                :to="'/products/' + id"
+                class="card-header hover:underline"
+            >
                 {{ title }}
             </NuxtLink>
 

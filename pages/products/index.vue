@@ -3,7 +3,7 @@
         <div class="py-10 text-center w-full font-bold">
             <h2 class="md:text-6xl text-4xl">Product Listing</h2>
             <h4 class="md:text-2xl text-lg opacity-80 mt-4">
-                Lorem ipsum dolor sit amet.
+                Find your ideal product.
             </h4>
         </div>
 
