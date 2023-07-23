@@ -7,7 +7,10 @@
         <span class="text-lg mx-3 select-none">{{ count }}x</span>
         <button class="btn btn-solid-primary" @click="sub">-</button>
 
-        <button class="ml-2 btn btn-solid-secondary" @click="cart.remove(id)">
+        <button
+            class="ml-2 item-rm btn btn-solid-secondary"
+            @click="cart.remove(id)"
+        >
             Remove
         </button>
     </div>
@@ -47,3 +50,13 @@ const sub = () => {
     }
 };
 </script>
+
+<style scoped>
+@media screen and (max-width: 400px) {
+    .item-rm {
+        display: inline-block;
+        width: 100%;
+        margin-top: 5px;
+    }
+}
+</style>
