@@ -1,30 +1,57 @@
 <template>
-    <div class="card m-auto max-w-full">
-        <div class="card-body">
-            <label
-                for="cart-modal"
-                class="btn btn-block card-header p-0 hover:underline"
-                @click="product"
-            >
-                {{ title }}
+    <div class="hidden sm:block">
+        <div class="grid items-center grid-cols-5 grid-rows-1 gap-2 py-2">
+            <img
+                src="https://source.unsplash.com/random/300x200"
+                class="block rounded-md"
+            />
+
+            <label for="cart-modal" @click="product">
+                <h2 class="hover:underline">{{ title }}</h2>
+                <h4 class="opacity-60 text-[0.7em]">{{ subtitle }}</h4>
             </label>
 
-            <h4
-                v-if="subtitle != 'null'"
-                class="card-header opacity-60 text-sm"
-            >
-                {{ subtitle }}
-            </h4>
+            <div className="col-span-2 col-start-3">
+                <UiItemManager
+                    :id="id"
+                    class="scale-[70%] text-center leading-[45px]"
+                />
+            </div>
 
-            <div class="text-content2">
-                <span class="font-bold"> Price: </span>
-                <span class="mb-4 inline-block">
-                    ${{ (price / 100).toFixed(2) }} ({{ settings.currency }})
-                    x{{ amount }}
-                </span>
+            <div class="text-[0.9em] text-center">
+                <div>${{ (price / 100).toFixed(2) }}</div>
+                <div class="text-[0.7em]">({{ settings.currency }})</div>
+            </div>
+        </div>
 
-                <div class="sm:text-left text-center">
-                    <UiItemManager :id="id" />
+        <hr />
+    </div>
+
+    <!-- Mobile -->
+    <div class="block sm:hidden">
+        <div class="card m-auto max-w-full">
+            <div class="card-body">
+                <label for="cart-modal" class="btn btn-block card-header p-0">
+                    <span class="hover:underline" @click="product">
+                        {{ title }}
+                    </span>
+
+                    <h4 class="card-header opacity-60 text-sm">
+                        x{{ amount }}
+                    </h4>
+                </label>
+
+                <div class="text-content2">
+                    <span class="font-bold">Price: </span>
+                    <span class="mb-4 inline-block">
+                        ${{ (price / 100).toFixed(2) }} ({{
+                            settings.currency
+                        }})
+                    </span>
+
+                    <div class="sm:text-left text-center">
+                        <UiItemManager :id="id" />
+                    </div>
                 </div>
             </div>
         </div>

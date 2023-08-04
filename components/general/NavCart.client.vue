@@ -24,8 +24,10 @@
                 >
                     ✕
                 </label>
-                <h2 class="text-xl">My Cart</h2>
+                <h2 class="text-xl">Shopping Cart</h2>
                 <template v-if="hasItems">
+                    <hr />
+
                     <GeneralNavCartItem
                         v-for="item in cart.items"
                         :id="item.id"
