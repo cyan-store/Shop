@@ -1,7 +1,5 @@
 <template>
-    <div
-        class="md:flex my-4 max-md:card max-md:mx-auto max-md:p-4 max-md:text-center"
-    >
+    <div class="md:flex my-4 max-md:mx-auto max-md:p-4 max-md:text-center">
         <img
             src="https://source.unsplash.com/random/300x200"
             class="md:block hidden flex-1 m-2 rounded-md max-w-[300px]"
@@ -29,6 +27,8 @@
                 <UiItemManager :id="id" />
             </div>
         </div>
+
+        <hr class="max-md:block mt-8 my-4 hidden" />
     </div>
 </template>
 

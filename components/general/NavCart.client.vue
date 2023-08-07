@@ -40,7 +40,7 @@
                     />
                 </template>
                 <template v-else>
-                    <h2 class="text-center opacity-60 italic my-4">
+                    <h2 class="text-center opacity-60 italic my-[100px]">
                         Nothing here
                     </h2>
                 </template>

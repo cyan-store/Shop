@@ -24,24 +24,24 @@
             </div>
         </div>
 
-        <hr />
+        <hr class="mt-4" />
     </div>
 
     <!-- Mobile -->
     <div class="block sm:hidden">
-        <div class="card m-auto max-w-full">
-            <div class="card-body">
-                <label for="cart-modal" class="btn btn-block card-header p-0">
+        <div class="m-auto max-w-full">
+            <div class="my-4">
+                <label for="cart-modal" class="font-bold text-xl">
                     <span class="hover:underline" @click="product">
                         {{ title }}
                     </span>
 
-                    <h4 class="card-header opacity-60 text-sm">
+                    <h4 class="opacity-60 text-sm float-right">
                         x{{ amount }}
                     </h4>
                 </label>
 
-                <div class="text-content2">
+                <div class="text-content2 mt-2">
                     <span class="font-bold">Price: </span>
                     <span class="mb-4 inline-block">
                         ${{ (price / 100).toFixed(2) }} ({{
@@ -55,6 +55,8 @@
                 </div>
             </div>
         </div>
+
+        <hr class="mt-4" />
     </div>
 </template>
 

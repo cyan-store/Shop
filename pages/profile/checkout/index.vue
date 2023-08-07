@@ -29,7 +29,7 @@
             </h2>
         </div>
 
-        <hr />
+        <hr class="max-md:hidden" />
         <ProfileCheckoutControlCart />
     </div>
 </template>
