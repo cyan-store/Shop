@@ -8,7 +8,9 @@
 
             <label for="cart-modal" @click="product">
                 <h2 class="hover:underline">{{ title }}</h2>
-                <h4 class="opacity-60 text-[0.7em]">{{ subtitle }}</h4>
+                <h4 v-if="subtitle != 'null'" class="opacity-60 text-[0.7em]">
+                    {{ subtitle }}
+                </h4>
             </label>
 
             <div className="col-span-2 col-start-3">

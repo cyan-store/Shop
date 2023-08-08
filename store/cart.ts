@@ -7,8 +7,13 @@ export interface CartItem {
     amount: number;
 }
 
+// TODO: Add expire
 export const useCart = defineStore("cart", () => {
     const items = ref<CartItem[]>([]);
+    const max = reactive({
+        items: 10,
+        amount: 20,
+    });
 
     const includes = (id: string) => items.value.map((e) => e.id).indexOf(id);
     const remove = (id: string) =>
@@ -20,7 +25,15 @@ export const useCart = defineStore("cart", () => {
         const inc = includes(item.id);
 
         if (inc === -1) {
+            if (items.value.length >= max.items) {
+                return;
+            }
+
             items.value.push(item);
+            return;
+        }
+
+        if (items.value[inc].amount >= max.amount) {
             return;
         }
 
@@ -53,8 +66,15 @@ export const useCart = defineStore("cart", () => {
         );
 
         if (!cart) return;
-        items.value = JSON.parse(cart);
+        try {
+            items.value = JSON.parse(cart);
+        } catch (e) {
+            // eslint-disable-next-line no-console
+            console.info("Could not import cart! Storage is possibly invalid");
+
+            localStorage.removeItem("user-cart");
+        }
     });
 
-    return { items, add, sub, remove, includes, clear };
+    return { items, max, add, sub, remove, includes, clear };
 });

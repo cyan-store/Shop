@@ -10,7 +10,7 @@
 
                 <hr class="my-4" />
                 <p class="text-sm opacity-60 sm:text-right text-center">
-                    {{ $moment(createdAt).format("MMMM Do YYYY h:mm a") }}
+                    {{ created }}
                 </p>
             </div>
         </div>
@@ -18,7 +18,7 @@
 </template>
 
 <script lang="ts" setup>
-defineProps<{
+const props = defineProps<{
     id: string;
     name: string;
     description: string | null;
@@ -27,4 +27,7 @@ defineProps<{
 }>();
 
 const { $moment } = useNuxtApp();
+const created = computed(() =>
+    $moment(props.createdAt).format("MMMM Do YYYY h:mm a")
+);
 </script>

@@ -63,13 +63,22 @@
             <div v-if="canCart" class="lg:text-left text-center">
                 <ClientOnly>
                     <UiItemManager v-if="amount" :id="props.id" />
-                    <button
-                        v-else
-                        class="btn btn-solid-primary w-full sm:w-auto"
-                        @click="add"
-                    >
-                        Add to cart
-                    </button>
+                    <template v-else>
+                        <h4
+                            v-if="hasMaxItems"
+                            class="text-content2 text-sm my-4"
+                        >
+                            Your cart has reached max capacity.
+                        </h4>
+
+                        <button
+                            :disabled="hasMaxItems"
+                            class="btn btn-solid-primary w-full sm:w-auto"
+                            @click="add"
+                        >
+                            Add to cart
+                        </button>
+                    </template>
                 </ClientOnly>
             </div>
             <h2 v-else class="text-center text-2xl mt-10 italic opacity-60">
@@ -157,6 +166,10 @@ const productStock = computed(() => {
         DISCONTINUED: "Discontinued -",
         HIDDEN: "",
     }[props.stock];
+});
+
+const hasMaxItems = computed(() => {
+    return cart.items.length >= cart.max.items;
 });
 
 const add = () => {

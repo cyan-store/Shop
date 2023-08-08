@@ -31,7 +31,11 @@
 <script lang="ts" setup>
 import type { OrderInfo } from "@/composables/useFetchOrders";
 
-definePageMeta({ middleware: ["auth", "purchase"] });
+useHead({ title: useTitle("Order Details") });
+definePageMeta({
+    layout: "margin",
+    middleware: ["auth", "purchase"],
+});
 
 const route = useRoute();
 const info = ref<OrderInfo>();

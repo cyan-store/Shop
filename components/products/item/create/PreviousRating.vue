@@ -17,9 +17,7 @@
         <div class="flex my-2">
             <NuxtRating class="flex-1" :rating-value="rating.stars" />
 
-            <div class="opacity-60 text-sm hidden sm:inline">
-                {{ $moment(rating.createdAt).format("MMMM Do YYYY h:mm a") }}
-            </div>
+            <div class="opacity-60 text-sm hidden sm:inline">{{ created }}</div>
         </div>
 
         <div class="text-right">
@@ -44,6 +42,10 @@ const props = defineProps<{
 const emits = defineEmits<{
     (e: "update:modelValue", evt: boolean): void;
 }>();
+
+const created = computed(() =>
+    $moment(rating.createdAt).format("MMMM Do YYYY h:mm a")
+);
 
 const rating = reactive({
     id: "",

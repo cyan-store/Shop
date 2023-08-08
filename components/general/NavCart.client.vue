@@ -41,7 +41,7 @@
                 </template>
                 <template v-else>
                     <h2 class="text-center opacity-60 italic my-[100px]">
-                        Nothing here
+                        No items in cart!
                     </h2>
                 </template>
 

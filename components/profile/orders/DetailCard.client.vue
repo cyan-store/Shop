@@ -2,8 +2,16 @@
     <div>
         <div>
             <h3>Location</h3>
-            {{ props.country }} | {{ props.postal }}
-            <!-- TODO: Map -->
+            <div>{{ props.country }} | {{ props.postal }}</div>
+
+            <div class="w-full">
+                <iframe
+                    width="100%"
+                    height="600"
+                    frameborder="0"
+                    :src="mapURL"
+                ></iframe>
+            </div>
         </div>
 
         <div>
@@ -21,7 +29,6 @@
             <div>
                 ${{ (props.amount / 100).toFixed(2) }} ({{ settings.currency }})
             </div>
-            <!-- TODO: Convert currency -->
         </div>
     </div>
 </template>
@@ -38,4 +45,13 @@ const props = defineProps<{
 }>();
 
 const settings = useSettings();
+const mapURL = computed(() => {
+    const params = new URLSearchParams({
+        hl: "en",
+        q: props.postal,
+        output: "embed",
+    });
+
+    return `https://maps.google.com/maps?${params.toString()}`;
+});
 </script>

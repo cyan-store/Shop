@@ -3,6 +3,11 @@ import client from "@/server/data/redis";
 import prisma from "@/server/data/prisma";
 import stripe from "@/server/data/stripe";
 
+const max = {
+    items: 11,
+    amount: 21,
+};
+
 interface CartItem {
     id: string;
     amount: number;
@@ -33,13 +38,21 @@ export default defineSafeEventHandler(async (evt) => {
         });
     }
 
+    // Too many items?
+    if (body.length >= max.items) {
+        throw createError({
+            statusCode: 400,
+            statusMessage: "Too many items in cart!",
+        });
+    }
+
     // Valid cart
     for (const item of body) {
         if (
             !String(item.id) ||
             !Number.isInteger(item.amount) ||
             item.amount <= 0 ||
-            item.amount >= 25
+            item.amount >= max.amount
         ) {
             throw createError({
                 statusCode: 400,

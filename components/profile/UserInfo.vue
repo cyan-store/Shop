@@ -28,7 +28,7 @@
             </h4>
 
             <h4 class="text-content2 my-2 text-sm overflow-hidden">
-                Signed in for {{ $moment(data?.expires).fromNow() }}
+                Signed in for {{ expire }}
             </h4>
         </div>
     </div>
@@ -39,6 +39,8 @@
 <script lang="ts" setup>
 const { $moment } = useNuxtApp();
 const { data, signOut } = useAuth();
+
+const expire = computed(() => $moment(data?.value?.expires).fromNow());
 
 const logout = () => {
     if (confirm("Are you sure?")) {
