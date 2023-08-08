@@ -109,8 +109,12 @@ export const useDeleteRating = async (id: string) => {
 };
 
 // Returns user ratings
-export const useFetchRatingUser = async (page: number, id = "") => {
-    const query = new URLSearchParams({ page: String(page), id });
+export const useFetchRatingUser = async (
+    page: number,
+    id = "",
+    sort = "asc"
+) => {
+    const query = new URLSearchParams({ page: String(page), id, sort });
     const data = await $fetch<ProductRatings[]>(
         `/api/profile/ratings?${query.toString()}`,
         {

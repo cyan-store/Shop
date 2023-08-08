@@ -10,7 +10,7 @@
                 />
 
                 <a
-                    class="link link-primary text-center block mt-2 text-sm max-md:hidden"
+                    class="link link-primary text-center block mt-2 text-sm max-md:hidden hover:underline"
                     @click="logout"
                 >
                     Sign Out

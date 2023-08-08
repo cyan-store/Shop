@@ -1,20 +1,23 @@
 <template>
-    <div>
-        <h2>
+    <div class="card mb-4 max-w-full m-auto p-4">
+        <h2 class="text-lg font-bold">
             <NuxtLink :to="`/products/${product.id}/ratings/create`">
-                {{ product.title }} | {{ product.stock }}
+                {{ product.title }}
             </NuxtLink>
         </h2>
 
         <NuxtRating :rating-value="rating" />
 
-        <p>{{ description }}</p>
-        <time>{{ createdAt }}</time>
+        <p v-if="description" class="my-4">{{ description }}</p>
+        <p v-else class="my-4 italic font-bold">No content provided.</p>
+
+        <time class="md:text-right text-xs opacity-60">{{ created }}</time>
     </div>
 </template>
 
 <script lang="ts" setup>
-defineProps<{
+const app = useNuxtApp();
+const props = defineProps<{
     rating: number;
     product: {
         id: string;
@@ -25,4 +28,8 @@ defineProps<{
     description: string;
     createdAt: string;
 }>();
+
+const created = computed(() =>
+    app.$moment(props.createdAt).format("MMMM Do YYYY h:mm a")
+);
 </script>

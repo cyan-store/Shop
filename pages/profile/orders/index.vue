@@ -19,44 +19,49 @@
         </div>
 
         <ClientOnly>
-            <h2
-                v-if="!orders.length"
-                class="text-center opacity-60 italic text-2xl my-[25vh]"
-            >
-                No orders found!
-            </h2>
-            <div v-else class="flex w-full overflow-x-auto">
-                <table class="table table-hover">
-                    <thead>
-                        <tr>
-                            <th>Status</th>
-                            <th>Quantity</th>
-                            <th>Amount Paid</th>
-                            <th>Country/Postal</th>
-                            <th>Shipping Status</th>
-                            <th>Created</th>
-                            <th>Updated</th>
-                        </tr>
-                    </thead>
-
-                    <tbody>
-                        <ProfileSimpleOrder
-                            v-for="order in orders"
-                            :id="order.id"
-                            :key="order.id"
-                            :product-i-d="order.productID"
-                            :status="order.status"
-                            :quantity="order.quantity"
-                            :amount="order.amount"
-                            :country="order.country"
-                            :postal="order.postal"
-                            :shipping="order.shipping"
-                            :created-at="String(order.createdAt)"
-                            :updated-at="String(order.updatedAt)"
-                        />
-                    </tbody>
-                </table>
+            <div v-if="loading">
+                <div class="spinner-simple m-auto my-[20vh]"></div>
             </div>
+            <template v-else>
+                <h2
+                    v-if="!orders.length"
+                    class="text-center opacity-60 italic text-2xl my-[25vh]"
+                >
+                    No orders found!
+                </h2>
+                <div v-else class="flex w-full overflow-x-auto">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Status</th>
+                                <th>Quantity</th>
+                                <th>Amount Paid</th>
+                                <th>Country/Postal</th>
+                                <th>Shipping Status</th>
+                                <th>Created</th>
+                                <th>Updated</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <ProfileSimpleOrder
+                                v-for="order in orders"
+                                :id="order.id"
+                                :key="order.id"
+                                :product-i-d="order.productID"
+                                :status="order.status"
+                                :quantity="order.quantity"
+                                :amount="order.amount"
+                                :country="order.country"
+                                :postal="order.postal"
+                                :shipping="order.shipping"
+                                :created-at="String(order.createdAt)"
+                                :updated-at="String(order.updatedAt)"
+                            />
+                        </tbody>
+                    </table>
+                </div>
+            </template>
         </ClientOnly>
 
         <div class="text-center my-8">
@@ -76,10 +81,13 @@ definePageMeta({
 
 const page = ref(0);
 const sort = ref("desc");
+const loading = ref(true);
 const orders = ref<Orders[]>([]);
 
 const loadOrders = async () => {
+    loading.value = true;
     orders.value = await useFetchOrders(page.value, sort.value);
+    loading.value = false;
 };
 
 const sortItem = () => {
