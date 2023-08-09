@@ -1,6 +1,6 @@
 <template>
     <div class="text-center my-[100px]">
-        <h2 class="text-6xl font-bold text-error">Order Complete!</h2>
+        <h2 class="text-6xl font-bold text-error">Order Canceled!</h2>
         <p class="my-[50px] text-xl text-content2">
             Your order has been canceled!
         </p>

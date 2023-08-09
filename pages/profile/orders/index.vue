@@ -73,7 +73,7 @@
 <script lang="ts" setup>
 import type { Orders } from "composables/useFetchOrders";
 
-useHead({ title: useTitle("Orders") });
+useHead({ title: useTitle("My Orders") });
 definePageMeta({
     layout: "margin",
     middleware: ["auth", "purchase"],
