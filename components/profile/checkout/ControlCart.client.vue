@@ -26,6 +26,7 @@
 </template>
 
 <script lang="ts" setup>
+const app = useNuxtApp();
 const cart = useCart();
 const settings = useSettings();
 
@@ -41,9 +42,17 @@ const total = computed(() => {
 });
 
 const clear = () => {
-    if (confirm("Are you sure?")) {
-        cart.clear();
-    }
+    app.$swal
+        .fire({
+            title: "Are you sure you want to empty your cart?",
+            showCancelButton: true,
+            confirmButtonText: "Clear",
+        })
+        .then((result: { isConfirmed: boolean }) => {
+            if (result.isConfirmed) {
+                cart.clear();
+            }
+        });
 };
 
 const checkout = async () => {

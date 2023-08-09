@@ -122,6 +122,7 @@ import {
 } from "@heroicons/vue/24/outline";
 
 const { signIn, signOut, status, data } = useAuth();
+const { $swal } = useNuxtApp();
 
 const settings = useSettings();
 const cart = useCart();
@@ -129,14 +130,23 @@ const shopName = computed(() => import.meta.env.VITE_SHOP);
 const auth = computed(() => status.value === "authenticated");
 const isFatal = computed(() => settings.state === "FATAL");
 
-const logout = async () => {
-    if (confirm("Are you sure?")) {
-        cart.clear();
+const logout = () => {
+    $swal
+        .fire({
+            title: "Are you sure you want to logout?",
+            text: "Unsaved items in cart will be lost.",
+            showCancelButton: true,
+            confirmButtonText: "Logout",
+        })
+        .then(async (result: { isConfirmed: boolean }) => {
+            if (result.isConfirmed) {
+                cart.clear();
 
-        await signOut({
-            redirect: true,
-            callbackUrl: "/",
+                await signOut({
+                    redirect: true,
+                    callbackUrl: "/",
+                });
+            }
         });
-    }
 };
 </script>

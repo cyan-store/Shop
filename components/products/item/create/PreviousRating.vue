@@ -32,7 +32,7 @@
 </template>
 
 <script lang="ts" setup>
-const { $moment } = useNuxtApp();
+const { $moment, $toast, $swal } = useNuxtApp();
 
 const props = defineProps<{
     id: string;
@@ -55,15 +55,22 @@ const rating = reactive({
     createdAt: "",
 });
 
-const removeRating = async () => {
-    if (!confirm("Are you sure?")) return;
+const removeRating = () => {
+    $swal
+        .fire({
+            title: "Are you sure you want to delete your rating?",
+            showCancelButton: true,
+            confirmButtonText: "Delete",
+        })
+        .then(async (result: { isConfirmed: boolean }) => {
+            if (result.isConfirmed) {
+                const del = await useDeleteRating(rating.id);
 
-    const del = await useDeleteRating(rating.id);
-
-    // TODO: Toast
-    alert(`${del.rating} has been removed.`);
-    emits("update:modelValue", false);
-    rating.name = "";
+                $toast.error(`${del.rating}* has been removed.`);
+                emits("update:modelValue", false);
+                rating.name = "";
+            }
+        });
 };
 
 onMounted(async () => {

@@ -93,7 +93,7 @@ import type { Stock } from "@prisma/client";
 import type { Stats } from "@/composables/useFetchRatings";
 
 const { status } = useAuth();
-const { $moment } = useNuxtApp();
+const { $moment, $toast } = useNuxtApp();
 
 const props = defineProps<{
     id: string;
@@ -181,5 +181,7 @@ const add = () => {
         price: props.price,
         amount: 1,
     });
+
+    $toast.success(`Added ${props.title} to cart!`);
 };
 </script>

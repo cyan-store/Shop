@@ -45,6 +45,8 @@ const props = defineProps<{
     rating: boolean;
 }>();
 
+const { $toast } = useNuxtApp();
+
 const stars = ref(0);
 const review = ref("");
 const router = useRouter();
@@ -56,8 +58,7 @@ const disabled = computed(() => {
 const rate = async () => {
     const req = await useCreateRating(props.id, stars.value, review.value);
 
-    // TODO: Toast
-    alert(`${req.rating} created!`);
+    $toast.success(`${req.rating}* rating created!`);
     router.push(`/products/${props.id}/ratings`);
 };
 </script>

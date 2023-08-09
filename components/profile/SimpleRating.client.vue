@@ -1,6 +1,6 @@
 <template>
     <div class="card mb-4 max-w-full m-auto p-4">
-        <h2 class="text-lg font-bold">
+        <h2 class="text-lg font-bold hover:underline">
             <NuxtLink :to="`/products/${product.id}/ratings/create`">
                 {{ product.title }}
             </NuxtLink>

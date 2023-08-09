@@ -37,14 +37,29 @@
 </template>
 
 <script lang="ts" setup>
-const { $moment } = useNuxtApp();
+const { $moment, $swal } = useNuxtApp();
 const { data, signOut } = useAuth();
+const cart = useCart();
 
 const expire = computed(() => $moment(data?.value?.expires).fromNow());
 
 const logout = () => {
-    if (confirm("Are you sure?")) {
-        signOut();
-    }
+    $swal
+        .fire({
+            title: "Are you sure you want to logout?",
+            text: "Unsaved items in cart will be lost.",
+            showCancelButton: true,
+            confirmButtonText: "Logout",
+        })
+        .then(async (result: { isConfirmed: boolean }) => {
+            if (result.isConfirmed) {
+                cart.clear();
+
+                await signOut({
+                    redirect: true,
+                    callbackUrl: "/",
+                });
+            }
+        });
 };
 </script>
