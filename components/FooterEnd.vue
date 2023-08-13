@@ -1,5 +1,5 @@
 <template>
-    <div class="mt-[5vh] bg-[#f3f3f3] p-10">
+    <div v-if="!isFatal" class="mt-[5vh] bg-[#f3f3f3] p-10">
         <div class="lg:grid grid-rows-1 grid-cols-5 max-w-[1600px] m-auto">
             <div class="px-4 col-span-2 max-lg:mb-2">
                 <!-- TODO: Logo here -->
@@ -97,7 +97,10 @@
 import { EnvelopeIcon, PhoneIcon } from "@heroicons/vue/24/outline";
 
 const { status } = useAuth();
+const settings = useSettings();
+
 const auth = computed(() => status.value === "authenticated");
+const isFatal = computed(() => settings.state === "FATAL");
 
 // Shop
 const shopName = computed(() => import.meta.env.VITE_SHOP);
