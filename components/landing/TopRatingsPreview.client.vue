@@ -10,10 +10,10 @@
             <div class="btn-group m-auto mt-8 btn-group-scrollable">
                 <button
                     class="btn"
-                    :class="active('week')"
-                    @click="period = 'week'"
+                    :class="active('all')"
+                    @click="period = 'all'"
                 >
-                    Past Week
+                    All Time
                 </button>
                 <button
                     class="btn"
@@ -24,10 +24,10 @@
                 </button>
                 <button
                     class="btn"
-                    :class="active('all')"
-                    @click="period = 'all'"
+                    :class="active('week')"
+                    @click="period = 'week'"
                 >
-                    All Time
+                    Past Week
                 </button>
             </div>
 
@@ -47,7 +47,7 @@
                         :rating-value="rating.rating"
                     />
 
-                    <div class="my-4 mt-8">
+                    <div class="my-4 mt-8 break-words">
                         <p v-if="rating.description">
                             {{ rating.description }}
                         </p>

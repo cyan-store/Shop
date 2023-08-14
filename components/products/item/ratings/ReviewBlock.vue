@@ -5,7 +5,7 @@
             <NuxtRating class="my-2" :rating-value="rating" rating-size="8" />
 
             <div class="text-content2">
-                <p v-if="description">{{ description }}</p>
+                <p v-if="description" class="break-words">{{ description }}</p>
                 <p v-else class="italic font-bold">No content provided.</p>
 
                 <hr class="my-4" />

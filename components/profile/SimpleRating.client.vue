@@ -8,7 +8,7 @@
 
         <NuxtRating :rating-value="rating" />
 
-        <p v-if="description" class="my-4">{{ description }}</p>
+        <p v-if="description" class="my-4 break-words">{{ description }}</p>
         <p v-else class="my-4 italic font-bold">No content provided.</p>
 
         <time class="md:text-right text-xs opacity-60">{{ created }}</time>
