@@ -3,12 +3,19 @@
         <div class="flex max-h-[500px] m-auto">
             <img
                 src="https://source.unsplash.com/random/400x400"
-                class="w-1/2 p-4 bg"
+                class="w-1/2 p-4 bg max-md:hidden"
             />
 
             <div class="w-full py-4">
-                <h2 class="font-bold text-5xl mb-3">{{ shopNameFull }}</h2>
-                <h4 class="text-content2 text-xl opacity-60">
+                <h2
+                    class="font-bold text-5xl mb-3 max-md:text-center max-md:text-3xl"
+                >
+                    {{ shopNameFull }}
+                </h2>
+
+                <h4
+                    class="text-content2 text-xl opacity-60 max-md:text-center max-md:text-sm"
+                >
                     {{ shopNameSub }}
                 </h4>
 
@@ -19,11 +26,17 @@
                     ipsum laboriosam, provident adipisci vero. Numquam!
                 </p>
 
-                <NuxtLink to="/products" class="btn btn-primary mt-[1em]">
+                <NuxtLink
+                    to="/products"
+                    class="btn btn-primary mt-[1em] max-md:w-full"
+                >
                     Explore
                 </NuxtLink>
 
-                <NuxtLink to="/about" class="btn btn-secondary ml-2 mt-[1em]">
+                <NuxtLink
+                    to="/about"
+                    class="btn btn-secondary md:ml-2 md:mt-[1em] mt-2 max-md:w-full"
+                >
                     About Us
                 </NuxtLink>
             </div>

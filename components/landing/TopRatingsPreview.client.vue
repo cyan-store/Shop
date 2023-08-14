@@ -7,7 +7,9 @@
                 Most recent user ratings
             </h4>
 
-            <div class="btn-group m-auto mt-8 btn-group-scrollable">
+            <div
+                class="btn-group m-auto mt-8 btn-group-scrollable max-sm:hidden"
+            >
                 <button
                     class="btn"
                     :class="active('all')"
@@ -31,13 +33,21 @@
                 </button>
             </div>
 
+            <div class="text-center my-4 sm:hidden mb-10">
+                <select v-model="period" class="select w-[80%]">
+                    <option value="all">All</option>
+                    <option value="month">Month</option>
+                    <option value="week">Week</option>
+                </select>
+            </div>
+
             <div v-if="!loading">
-                <hr class="my-4 w-[75%] m-auto my-[50px]" />
+                <hr class="my-4 sm:w-[75%] m-auto my-[50px] max-sm:hidden" />
 
                 <div
                     v-for="rating in ratings"
                     :key="rating.id"
-                    class="w-[75%] m-auto"
+                    class="sm:w-[75%] m-auto"
                 >
                     <h4 class="font-bold text-lg">{{ rating.name }}</h4>
 
