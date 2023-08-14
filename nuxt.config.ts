@@ -7,6 +7,10 @@ export default defineNuxtConfig({
         "@nuxtjs/tailwindcss",
     ],
 
+    app: {
+        pageTransition: { name: "page", mode: "out-in" },
+    },
+
     imports: { dirs: ["./store"] },
     devtools: { enabled: false },
 

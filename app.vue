@@ -18,3 +18,12 @@ if (!settings.loaded) {
     }
 }
 </script>
+
+<style>
+.page-enter-from {
+    opacity: 0;
+}
+.page-enter-active {
+    transition: all 0.1s ease-in-out;
+}
+</style>
