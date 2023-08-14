@@ -20,49 +20,23 @@
                 </p>
 
                 <NuxtLink to="/products" class="btn btn-primary mt-[1em]">
-                    Explore Products
+                    Explore
                 </NuxtLink>
 
-                <a class="btn btn-secondary ml-2 mt-[1em]" @click="directAuth">
-                    {{ auth ? "My Profile" : "Sign in" }}
-                </a>
+                <NuxtLink to="/about" class="btn btn-secondary ml-2 mt-[1em]">
+                    About Us
+                </NuxtLink>
             </div>
         </div>
 
-        <div class="divider divider-horizontal">Products</div>
-        <div class="m-auto">
-            <h2 class="text-center font-bold text-2xl">Best Sellers</h2>
-
-            <LandingBestSellersPreview />
-        </div>
-
-        <!--
-        <div class="divider divider-horizontal">Ratings</div>
-        <div class="m-auto">
-            <h2 class="text-center font-bold text-2xl">User Ratings</h2>
-
-            <LandingTopRatingsPreview />
-        </div>
-        -->
+        <LandingBestSellersPreview />
+        <LandingTopRatingsPreview />
     </div>
 </template>
 
 <script lang="ts" setup>
-const { status, signIn } = useAuth();
-const router = useRouter();
-
 const shopNameFull = computed(() => import.meta.env.VITE_FULL);
 const shopNameSub = computed(() => import.meta.env.VITE_SUB);
-
-const auth = computed(() => status.value === "authenticated");
-const directAuth = () => {
-    if (auth.value) {
-        router.push("/profile");
-        return;
-    }
-
-    signIn("auth0");
-};
 
 useHead({ title: useTitle("Home") });
 definePageMeta({ layout: "margin" });
