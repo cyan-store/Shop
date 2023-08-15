@@ -5,6 +5,7 @@ export default defineNuxtConfig({
         "nuxt-rating",
         "@pinia/nuxt",
         "@nuxtjs/tailwindcss",
+        "@nuxt/content",
     ],
 
     app: {

@@ -10,5 +10,5 @@ module.exports = {
         removeThemes: ["dark"],
     },
 
-    plugins: [require("rippleui")],
+    plugins: [require("rippleui"), require("@tailwindcss/typography")],
 };

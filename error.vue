@@ -2,7 +2,7 @@
     <NuxtLayout>
         <div class="text-center p-10 max-sm:p-5">
             <div class="mt-[100px] leading-[3em]">
-                <h1 class="text-5xl font-bold">Page Error!</h1>
+                <h1 class="text-5xl font-bold">Website Error!</h1>
                 <h2 class="text-xl opacity-60 mt-2 font-bold text-content2">
                     Status {{ props.error?.statusCode }}
                 </h2>
