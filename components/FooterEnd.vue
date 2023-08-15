@@ -50,7 +50,7 @@
                         :href="`tel:+${supportPhone}`"
                     >
                         <PhoneIcon class="h-[1em] w-[1em] inline mr-1" />
-                        <span>(+1) 519-123-4567</span>
+                        <span>{{ supportPhone }}</span>
                     </a>
 
                     <a

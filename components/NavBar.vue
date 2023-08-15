@@ -115,7 +115,6 @@
 import {
     Bars3Icon,
     UserPlusIcon,
-    BuildingStorefrontIcon,
     ArrowRightOnRectangleIcon,
 } from "@heroicons/vue/24/outline";
 
