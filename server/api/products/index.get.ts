@@ -22,6 +22,17 @@ interface ProductOptions {
     skip: number;
 }
 
+interface SearchOptions {
+    where: {
+        stock: string;
+        title?: {
+            search: string;
+        };
+    };
+
+    _count: true;
+}
+
 export default defineSafeEventHandler(async (evt) => {
     const query = getQuery(evt);
     const orders = ["", "any", "title", "date", "price", "rating"];
@@ -64,10 +75,19 @@ export default defineSafeEventHandler(async (evt) => {
         skip: PRODUCTS * page,
     };
 
+    const countOptions: SearchOptions = {
+        where: {
+            stock: "IN_STOCK",
+        },
+
+        _count: true,
+    };
+
     if (search !== "") {
-        options.where.title = {
-            search: String(search).replace(/[^\w\s]/gi, "") + "*",
-        };
+        const searchFilter = String(search).replace(/[^\w\s]/gi, "") + "*";
+
+        options.where.title = { search: searchFilter };
+        countOptions.where.title = { search: searchFilter };
     }
 
     switch (order) {
@@ -92,5 +112,11 @@ export default defineSafeEventHandler(async (evt) => {
     }
 
     // Query request
-    return await prisma.products.findMany(options as any);
+    const count = await prisma.products.aggregate(countOptions as any);
+    const data = await prisma.products.findMany(options as any);
+
+    return {
+        count: count._count,
+        data,
+    };
 });

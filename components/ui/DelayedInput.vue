@@ -1,23 +1,12 @@
 <template>
     <input
-        v-if="!label"
         type="text"
+        :class="classes"
         :placeholder="placehold"
         :disabled="disabled"
         :value="modelValue"
         @input="updateInput"
     />
-
-    <label v-else>
-        <span>{{ label }}</span>
-        <input
-            type="text"
-            :placeholder="placehold"
-            :disabled="disabled"
-            :value="modelValue"
-            @input="updateInput"
-        />
-    </label>
 </template>
 
 <script lang="ts" setup>
@@ -27,7 +16,7 @@ let timer: Timeout;
 defineProps<{
     modelValue: string;
     placehold: string;
-    label?: string;
+    classes?: string;
     disabled?: boolean;
 }>();
 

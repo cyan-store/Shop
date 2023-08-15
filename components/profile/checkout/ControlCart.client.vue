@@ -1,13 +1,32 @@
 <template>
-    <div>
-        <hr />
-        <p>${{ total }} ({{ settings.currency }})</p>
-        <button :disabled="cartEmpty" @click="clear">Clear Cart</button>
-        <button :disabled="cartEmpty" @click="checkout">Checkout</button>
+    <div class="my-4">
+        <div class="md:inline-flex md:w-[75%]">
+            <button
+                class="flex-1 mr-2 btn btn-solid-error w-full"
+                :disabled="cartEmpty"
+                @click="clear"
+            >
+                Clear Cart
+            </button>
+
+            <button
+                class="flex-1 btn btn-solid-success w-full my-2 md:my-0"
+                :disabled="cartEmpty"
+                @click="checkout"
+            >
+                Checkout
+            </button>
+        </div>
+
+        <hr class="my-4 inline-block w-full md:hidden" />
+        <p class="md:float-right font-bold text-xl text-center">
+            ${{ total }} ({{ settings.currency }})
+        </p>
     </div>
 </template>
 
 <script lang="ts" setup>
+const app = useNuxtApp();
 const cart = useCart();
 const settings = useSettings();
 
@@ -23,9 +42,17 @@ const total = computed(() => {
 });
 
 const clear = () => {
-    if (confirm("Are you sure?")) {
-        cart.clear();
-    }
+    app.$swal
+        .fire({
+            title: "Are you sure you want to empty your cart?",
+            showCancelButton: true,
+            confirmButtonText: "Clear",
+        })
+        .then((result: { isConfirmed: boolean }) => {
+            if (result.isConfirmed) {
+                cart.clear();
+            }
+        });
 };
 
 const checkout = async () => {

@@ -12,6 +12,10 @@ interface UserRatingsOptions {
         };
     };
 
+    orderBy: {
+        createdAt: "asc" | "desc";
+    };
+
     select: {
         id: true;
         name: true;
@@ -28,6 +32,8 @@ interface UserRatingsOptions {
 
 export default defineSafeEventHandler(async (evt) => {
     const query = getQuery(evt);
+    const sorts = ["asc", "desc"];
+    const sort = query?.sort || "asc";
     const productID = String(query?.id || "");
     const page = parseInt(String(query?.page)) || 0;
 
@@ -44,6 +50,13 @@ export default defineSafeEventHandler(async (evt) => {
         });
     }
 
+    if (!sorts.includes(String(sort))) {
+        throw createError({
+            statusCode: 400,
+            statusMessage: "Invalid sort!",
+        });
+    }
+
     const options: UserRatingsOptions = {
         where: {
             user: evt.context.token.sub,
@@ -52,6 +65,10 @@ export default defineSafeEventHandler(async (evt) => {
                     stock: "HIDDEN",
                 },
             },
+        },
+
+        orderBy: {
+            createdAt: sort as "asc" | "desc",
         },
 
         select: {

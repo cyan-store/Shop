@@ -11,10 +11,13 @@
         "format": "prettier --write ."
     },
     "devDependencies": {
+        "@nuxt/content": "^2.7.2",
         "@nuxt/devtools": "latest",
         "@nuxtjs/eslint-config-typescript": "^12.0.0",
+        "@nuxtjs/tailwindcss": "^6.8.0",
         "@pinia/nuxt": "^0.4.11",
         "@sidebase/nuxt-auth": "^0.6.0-beta.2",
+        "@tailwindcss/typography": "^0.5.9",
         "@types/node": "^18",
         "@types/uuid": "^9.0.2",
         "@typescript-eslint/parser": "^5.60.0",
@@ -28,9 +31,14 @@
         "typescript": "latest"
     },
     "dependencies": {
+        "@heroicons/vue": "^2.0.18",
         "@prisma/client": "^4.16.2",
+        "moment": "^2.29.4",
         "pinia": "^2.1.4",
         "redis": "^4.6.7",
-        "stripe": "^12.12.0"
+        "rippleui": "^1.12.1",
+        "stripe": "^12.12.0",
+        "sweetalert2": "^11.7.20",
+        "vue-toast-notification": "^3.1.1"
     }
 }

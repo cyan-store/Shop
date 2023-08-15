@@ -1,20 +1,43 @@
 <template>
-    <div>
-        <h2>{{ status }}</h2>
-        <pre>{{ data }}</pre>
+    <div class="md:w-1/2 m-auto mt-10">
+        <ProfileUserInfo />
 
-        <NuxtLink v-if="settings.ratings" to="/profile/ratings">
-            Ratings
-        </NuxtLink>
-        <NuxtLink v-if="settings.state !== 'NOPURCHASE'" to="/profile/orders">
-            Orders
-        </NuxtLink>
+        <div
+            class="max-md:block grid gap-x-2"
+            :class="{
+                'grid-cols-2':
+                    settings.ratings && settings.state !== 'NOPURCHASE',
+            }"
+        >
+            <NuxtLink
+                v-if="settings.ratings"
+                class="btn btn-primary max-md:w-full max-md:my-2"
+                to="/profile/ratings"
+            >
+                My Ratings
+            </NuxtLink>
+
+            <NuxtLink
+                v-if="settings.state !== 'NOPURCHASE'"
+                class="btn btn-secondary max-md:w-full"
+                to="/profile/orders"
+            >
+                My Orders
+            </NuxtLink>
+
+            <div class="btn btn-error my-2 w-full md:hidden">Sign Out</div>
+        </div>
     </div>
 </template>
 
 <script lang="ts" setup>
-definePageMeta({ middleware: "auth" });
+definePageMeta({
+    layout: "margin",
+    middleware: "auth",
+});
 
-const { status, data } = useAuth();
+const { data } = useAuth();
 const settings = useSettings();
+
+useHead({ title: useTitle(`${data.value?.user?.name}'s Profile`) });
 </script>

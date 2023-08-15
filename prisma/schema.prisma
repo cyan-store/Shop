@@ -82,11 +82,11 @@ model Ratings {
 
 model Orders {
     id            String         @id @default(uuid())
-    productID     String // String[] - split by ","
+    productID     String         @db.VarChar(400) // String[] - split by ","
     transactionID String         @unique
     userID        String
     status        PaymentStatus  @default(UNPAID)
-    quantity      String // String[] - split by ","
+    quantity      String         @db.VarChar(100) // String[] - split by ","
     amount        Int // Amount in cents
     email         String
     country       String

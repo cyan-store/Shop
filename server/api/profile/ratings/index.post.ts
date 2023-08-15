@@ -21,10 +21,10 @@ export default defineSafeEventHandler(async (evt) => {
         });
     }
 
-    if (String(description).length >= 500) {
+    if (String(description).length >= 150) {
         throw createError({
             statusCode: 400,
-            statusMessage: "Rating can only be 500 characters!",
+            statusMessage: "Rating can only be 150 characters!",
         });
     }
 
