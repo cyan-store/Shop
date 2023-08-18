@@ -41,6 +41,7 @@
                 :id="product.info.id"
                 :key="product.info.id"
                 :title="product.info.title"
+                :images="product.info.images"
                 :price="product.info.price"
                 :stock="product.info.stock"
                 :amount="product.amount"

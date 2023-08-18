@@ -14,6 +14,7 @@ export interface Orders {
 export interface Info {
     id: string;
     title: string;
+    images: string;
     price: number;
     stock: string;
 }

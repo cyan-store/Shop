@@ -53,6 +53,7 @@ export default defineSafeEventHandler(async (evt) => {
             select: {
                 id: true,
                 title: true,
+                images: true,
                 price: true,
                 stock: true,
             },

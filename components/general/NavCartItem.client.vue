@@ -1,10 +1,12 @@
 <template>
     <div class="hidden sm:block">
         <div class="grid items-center grid-cols-5 grid-rows-1 gap-2 py-2">
-            <img
-                src="https://source.unsplash.com/random/300x200"
-                class="block rounded-md"
-            />
+            <div
+                class="block rounded-md max-w-[150px] max-h-[50px] overflow-hidden bg-forced"
+                :style="`background-image: url('${img}')`"
+            >
+                <img :src="img" class="opacity-0" />
+            </div>
 
             <label for="cart-modal" @click="product">
                 <h2 class="hover:underline">{{ title }}</h2>
@@ -76,4 +78,13 @@ const router = useRouter();
 const settings = useSettings();
 
 const product = () => router.push(`/products/${props.id}`);
+const img = computed(() => useImage(props.images));
 </script>
+
+<style scoped>
+.bg-forced {
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: 150px;
+}
+</style>

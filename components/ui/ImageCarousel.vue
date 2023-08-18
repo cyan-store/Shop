@@ -51,12 +51,8 @@
 <script lang="ts" setup>
 import { ArrowLeftIcon, ArrowRightIcon } from "@heroicons/vue/20/solid";
 
-const images = ref([
-    "https://source.unsplash.com/random/400x280",
-    "https://source.unsplash.com/random/401x280",
-    "https://source.unsplash.com/random/402x280",
-    "https://source.unsplash.com/random/403x280",
-]);
+const props = defineProps<{ imgs: string }>();
+const images = ref(useImages(props.imgs));
 
 const idx = ref(0);
 const image = ref("");

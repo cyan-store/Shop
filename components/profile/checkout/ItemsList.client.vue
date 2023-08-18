@@ -1,9 +1,11 @@
 <template>
     <div class="md:flex my-4 max-md:mx-auto max-md:p-4 max-md:text-center">
-        <img
-            src="https://source.unsplash.com/random/300x200"
-            class="md:block hidden flex-1 m-2 rounded-md max-w-[300px]"
-        />
+        <div
+            class="md:block hidden flex-1 m-2 overflow-hidden rounded-md max-w-[300px] max-h-[200px] bg-forced"
+            :style="`background-image: url('${img}')`"
+        >
+            <img :src="img" class="opacity-0" />
+        </div>
 
         <div class="flex-1 ml-2">
             <h2 class="text-3xl font-bold hover:underline" @click="product">
@@ -45,4 +47,13 @@ const props = defineProps<{
 const router = useRouter();
 const settings = useSettings();
 const product = () => router.push(`/products/${props.id}`);
+const img = computed(() => useImage(props.images));
 </script>
+
+<style scoped>
+.bg-forced {
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: 350px;
+}
+</style>

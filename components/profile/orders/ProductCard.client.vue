@@ -1,10 +1,11 @@
 <template>
     <div class="sm:flex my-4 max-sm:text-center">
-        <!-- TODO: Placeholder image if product is hidden -->
-        <img
-            src="https://source.unsplash.com/random/300x200"
-            class="rounded-md w-[250px] inline-block max-md:w-[50%] max-sm:hidden"
-        />
+        <div
+            class="rounded-md w-[250px] max-h-[200px] inline-block max-md:w-[50%] max-sm:hidden bg-forced"
+            :style="`background-image: url('${img}')`"
+        >
+            <img :src="img" class="opacity-0" />
+        </div>
 
         <div class="inline-block ml-2">
             <h2 v-if="id !== '0'" class="hover:underline font-bold text-xl">
@@ -33,6 +34,7 @@
 const props = defineProps<{
     id: string;
     title: string;
+    images: string;
     price: number;
     stock: string;
     amount: string;
@@ -47,4 +49,14 @@ const productStock = computed(() => {
         HIDDEN: "Unknown Stock",
     }[props.stock];
 });
+
+const img = computed(() => useImage(props.images));
 </script>
+
+<style scoped>
+.bg-forced {
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: 500px;
+}
+</style>

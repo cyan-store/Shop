@@ -1,14 +1,14 @@
 <template>
     <div class="details-info flex py-10 mb-10">
         <div class="flex-1 lg:flex hidden justify-center">
-            <UiImageCarousel />
+            <UiImageCarousel :imgs="props.images" />
         </div>
 
         <div class="flex-1 lg:leading-8">
             <div class="lg:hidden mb-4">
                 <!-- Mobile -->
                 <div class="flex items-center h-[280px] justify-center">
-                    <UiImageCarousel />
+                    <UiImageCarousel :imgs="props.images" />
                 </div>
 
                 <hr class="mt-5" />

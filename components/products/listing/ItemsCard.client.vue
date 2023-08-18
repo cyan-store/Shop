@@ -1,6 +1,12 @@
 <template>
     <div class="card card-image-cover m-auto sm:m-0">
-        <img src="https://source.unsplash.com/random/300x200" />
+        <div
+            class="min-h-[200px] h-[200px] overflow-hidden bg-forced rounded-md"
+            :style="`background-image: url('${img}')`"
+        >
+            <img :src="img" class="opacity-0" />
+        </div>
+
         <div class="card-body">
             <NuxtLink
                 :to="'/products/' + id"
@@ -43,9 +49,16 @@ const props = defineProps<{
 
 const settings = useSettings();
 const desc = computed(() => props.description.replace(/(.{50})..+/, "$1..."));
+const img = computed(() => useImage(props.images));
 </script>
 
 <style scoped>
+.bg-forced {
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+}
+
 .card-body {
     height: 100%;
 }
