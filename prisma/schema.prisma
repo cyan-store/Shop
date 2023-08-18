@@ -54,8 +54,8 @@ model Products {
     title       String
     subtitle    String?
     description String
-    images      String // String[] - split by ","
-    tags        String // String[] - split by ","
+    images      String    @db.VarChar(250) // String[] - split by ","
+    tags        String    @db.VarChar(250) // String[] - split by ","
     price       Int // Amount in cents
     ratings     Ratings[]
     stock       Stock     @default(IN_STOCK)
@@ -82,11 +82,11 @@ model Ratings {
 
 model Orders {
     id            String         @id @default(uuid())
-    productID     String         @db.VarChar(400) // String[] - split by ","
+    productID     String         @db.VarChar(450) // String[] - split by ","
     transactionID String         @unique
     userID        String
     status        PaymentStatus  @default(UNPAID)
-    quantity      String         @db.VarChar(100) // String[] - split by ","
+    quantity      String         @db.VarChar(150) // String[] - split by ","
     amount        Int // Amount in cents
     email         String
     country       String
