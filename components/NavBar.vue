@@ -68,17 +68,11 @@
                                 </a>
                             </template>
                             <template v-else>
-                                <a
-                                    class="dropdown-item text-sm"
-                                    @click="signIn('auth0')"
-                                >
+                                <a class="dropdown-item text-sm" @click="login">
                                     Login
                                 </a>
 
-                                <a
-                                    class="dropdown-item text-sm"
-                                    @click="signIn('auth0')"
-                                >
+                                <a class="dropdown-item text-sm" @click="login">
                                     Register
                                 </a>
                             </template>
@@ -103,7 +97,7 @@
                 </div>
             </template>
             <template v-else>
-                <div class="navbar-item" @click="signIn('auth0')">
+                <div class="navbar-item" @click="login">
                     <UserPlusIcon class="h-6 w-6" />
                 </div>
             </template>
@@ -126,6 +120,11 @@ const cart = useCart();
 const shopName = computed(() => import.meta.env.VITE_SHOP);
 const auth = computed(() => status.value === "authenticated");
 const isFatal = computed(() => settings.state === "FATAL");
+
+const login = async () => {
+    cart.clear();
+    await signIn("auth0");
+};
 
 const logout = () => {
     $swal
