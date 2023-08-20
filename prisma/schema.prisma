@@ -13,11 +13,6 @@ enum Settings {
     SERVER_SETTINGS
 }
 
-enum Status {
-    DEFAULT
-    NOPURCHASE
-}
-
 enum Stock {
     IN_STOCK
     OUT_STOCK
@@ -44,8 +39,9 @@ enum ShippingStatus {
 // Database
 model System {
     id       Settings @id @default(SERVER_SETTINGS)
-    status   Status   @default(DEFAULT)
     currency String   @default("CAD")
+    shipping String   @default("CA,US")
+    purchase Boolean  @default(true)
     ratings  Boolean  @default(true)
 }
 

@@ -70,7 +70,7 @@ const settings = useSettings();
 const dialog = ref(false);
 
 const hasItems = computed(() => !!cart.items.length);
-const allowCart = computed(() => settings.state !== "NOPURCHASE");
+const allowCart = computed(() => settings.purchase);
 
 const cartLen = computed(() => {
     if (cart.items.length > 9) {

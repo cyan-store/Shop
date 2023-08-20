@@ -130,14 +130,14 @@ const totalRatings = computed(() => {
 
 const canCart = computed(() => {
     return (
-        settings.state !== "NOPURCHASE" &&
+        settings.purchase &&
         status.value === "authenticated" &&
         props.stock === "IN_STOCK"
     );
 });
 
 const cannotPurchaseReason = computed(() => {
-    if (settings.state === "NOPURCHASE") {
+    if (!settings.purchase) {
         return "";
     } else if (props.stock !== "IN_STOCK") {
         return "Product is out of stock!";

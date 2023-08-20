@@ -43,13 +43,16 @@
         </div>
 
         <LandingBestSellersPreview />
-        <LandingTopRatingsPreview />
+        <LandingTopRatingsPreview v-if="ratings" />
     </div>
 </template>
 
 <script lang="ts" setup>
+const settings = useSettings();
+
 const shopNameFull = computed(() => import.meta.env.VITE_FULL);
 const shopNameSub = computed(() => import.meta.env.VITE_SUB);
+const ratings = computed(() => settings.ratings);
 
 useHead({ title: useTitle("Home") });
 definePageMeta({ layout: "margin" });

@@ -3,7 +3,7 @@ import prisma from "@/server/data/prisma";
 export default defineSafeEventHandler(async (evt) => {
     const { id } = evt.context.params as { id: string };
 
-    if (evt.context.settings.status === "NOPURCHASE") {
+    if (!evt.context.settings.purchase) {
         // Return nothing -> 404
         return;
     }

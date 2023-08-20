@@ -7,7 +7,7 @@ export default defineSafeEventHandler(async (evt) => {
     const sort = query?.sort || "asc";
     const page = parseInt(String(query?.page)) || 0;
 
-    if (evt.context.settings.status === "NOPURCHASE") {
+    if (!evt.context.settings.purchase) {
         // Return nothing -> 404
         return;
     }

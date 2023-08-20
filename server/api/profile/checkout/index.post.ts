@@ -25,7 +25,7 @@ export default defineSafeEventHandler(async (evt) => {
     const products: CartItem[] = [];
     const checkout: CheckoutItem[] = [];
 
-    if (evt.context.settings.status === "NOPURCHASE") {
+    if (!evt.context.settings.purchase) {
         // Return nothing -> 404
         return;
     }
