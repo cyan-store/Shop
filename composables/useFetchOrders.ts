@@ -11,7 +11,24 @@ export interface Orders {
     updatedAt: Date;
 }
 
-export interface Info {
+export interface OrderDetailed {
+    id: string;
+    productID: string;
+    status: string;
+    quantity: string;
+    amount: number;
+    shipping: string;
+    city: string;
+    country: string;
+    line1: string;
+    line2: string;
+    postal: string;
+    state: string;
+    createdAt: string;
+    updatedAt: string;
+}
+
+export interface OrderInfoDetailed {
     id: string;
     title: string;
     images: string;
@@ -20,25 +37,12 @@ export interface Info {
 }
 
 export interface Product {
-    info: Info;
+    info: OrderInfoDetailed;
     amount: string;
 }
 
-export interface Order {
-    id: string;
-    productID: string;
-    status: string;
-    quantity: string;
-    amount: number;
-    country: string;
-    postal: string;
-    shipping: string;
-    createdAt: string;
-    updatedAt: string;
-}
-
 export interface OrderInfo {
-    order: Order;
+    order: OrderDetailed;
     products: Product[];
 }
 
