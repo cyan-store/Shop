@@ -5,8 +5,7 @@
         <div
             class="max-md:block grid gap-x-2"
             :class="{
-                'grid-cols-2':
-                    settings.ratings && settings.state !== 'NOPURCHASE',
+                'grid-cols-2': settings.ratings && settings.purchase,
             }"
         >
             <NuxtLink
@@ -18,7 +17,7 @@
             </NuxtLink>
 
             <NuxtLink
-                v-if="settings.state !== 'NOPURCHASE'"
+                v-if="settings.purchase"
                 class="btn btn-secondary max-md:w-full"
                 to="/profile/orders"
             >

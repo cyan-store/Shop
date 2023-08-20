@@ -1,16 +1,18 @@
-import type { Status } from "@prisma/client";
-
 export interface Settings {
     id: string;
-    status: Status | "FATAL";
     currency: string;
+    shipping: string;
+    purchase: boolean;
     ratings: boolean;
 }
 
 export const useSettings = defineStore("settings", () => {
     const loaded = ref(false);
     const state = ref("FATAL");
+
     const currency = ref("");
+    const shipping = ref("");
+    const purchase = ref(true);
     const ratings = ref(true);
 
     const init = async () => {
@@ -19,14 +21,16 @@ export const useSettings = defineStore("settings", () => {
         });
 
         if (data.value) {
-            state.value = data.value.status;
             currency.value = data.value.currency;
+            shipping.value = data.value.shipping;
+            purchase.value = data.value.purchase;
             ratings.value = data.value.ratings;
+            state.value = "DEFAULT";
         }
 
         loaded.value = true;
         return { data, error };
     };
 
-    return { init, loaded, state, currency, ratings };
+    return { init, loaded, state, currency, shipping, purchase, ratings };
 });

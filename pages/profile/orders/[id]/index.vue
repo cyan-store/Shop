@@ -61,7 +61,8 @@
             <div>
                 <h2 class="font-bold text-lg">Location</h2>
                 <h4 class="text-content2 text-bold">
-                    {{ info.order.country }} | {{ info.order.postal }}
+                    {{ info.order.city }},
+                    {{ info.order.line1 }}
                 </h4>
             </div>
         </div>

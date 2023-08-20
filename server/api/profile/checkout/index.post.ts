@@ -25,7 +25,7 @@ export default defineSafeEventHandler(async (evt) => {
     const products: CartItem[] = [];
     const checkout: CheckoutItem[] = [];
 
-    if (evt.context.settings.status === "NOPURCHASE") {
+    if (!evt.context.settings.purchase) {
         // Return nothing -> 404
         return;
     }
@@ -110,6 +110,23 @@ export default defineSafeEventHandler(async (evt) => {
         mode: "payment",
         success_url: `${env.STRIPE_URL}/profile/orders/success`,
         cancel_url: `${env.STRIPE_URL}/profile/orders/cancel`,
+        shipping_address_collection: {
+            allowed_countries: evt.context.settings.shipping.split(","),
+        },
+
+        shipping_options: [
+            {
+                shipping_rate_data: {
+                    display_name: "Fixed Shipping Cost",
+                    type: "fixed_amount",
+                    fixed_amount: {
+                        amount: evt.context.settings.shippingCost,
+                        currency: evt.context.settings.currency.toLowerCase(),
+                    },
+                },
+            },
+        ],
+
         line_items: checkout.map((c) => {
             return {
                 price_data: {

@@ -13,11 +13,6 @@ enum Settings {
     SERVER_SETTINGS
 }
 
-enum Status {
-    DEFAULT
-    NOPURCHASE
-}
-
 enum Stock {
     IN_STOCK
     OUT_STOCK
@@ -43,10 +38,12 @@ enum ShippingStatus {
 
 // Database
 model System {
-    id       Settings @id @default(SERVER_SETTINGS)
-    status   Status   @default(DEFAULT)
-    currency String   @default("CAD")
-    ratings  Boolean  @default(true)
+    id           Settings @id @default(SERVER_SETTINGS)
+    currency     String   @default("CAD")
+    shipping     String   @default("CA,US")
+    shippingCost Int      @default(1500) // Amount in cents
+    purchase     Boolean  @default(true)
+    ratings      Boolean  @default(true)
 }
 
 model Products {
@@ -89,9 +86,14 @@ model Orders {
     quantity      String         @db.VarChar(150) // String[] - split by ","
     amount        Int // Amount in cents
     email         String
-    country       String
-    postal        String
     shipping      ShippingStatus @default(UNKNOWN)
+    shippingName  String
+    city          String
+    country       String
+    line1         String
+    line2         String
+    postal        String
+    state         String
     createdAt     DateTime       @default(now())
     updatedAt     DateTime       @updatedAt
 }

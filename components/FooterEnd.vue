@@ -30,10 +30,19 @@
             <div v-if="auth" class="px-4">
                 <h2 class="font-bold text-lg max-lg:mb-2">Profile</h2>
                 <div>
-                    <NuxtLink class="link block" to="/profile/orders">
+                    <NuxtLink
+                        v-if="settings.purchase"
+                        class="link block"
+                        to="/profile/orders"
+                    >
                         Order History
                     </NuxtLink>
-                    <NuxtLink class="link block" to="/profile/ratings">
+
+                    <NuxtLink
+                        v-if="settings.ratings"
+                        class="link block"
+                        to="/profile/ratings"
+                    >
                         My Ratings
                     </NuxtLink>
                 </div>
@@ -99,8 +108,12 @@ import { EnvelopeIcon, PhoneIcon } from "@heroicons/vue/24/outline";
 const { status } = useAuth();
 const settings = useSettings();
 
-const auth = computed(() => status.value === "authenticated");
 const isFatal = computed(() => settings.state === "FATAL");
+const auth = computed(
+    () =>
+        status.value === "authenticated" &&
+        (settings.purchase || settings.ratings)
+);
 
 // Shop
 const shopName = computed(() => import.meta.env.VITE_SHOP);

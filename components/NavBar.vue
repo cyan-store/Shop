@@ -44,6 +44,7 @@
                                 </NuxtLink>
 
                                 <NuxtLink
+                                    v-if="settings.purchase"
                                     to="/profile/orders"
                                     tabindex="-1"
                                     class="dropdown-item text-sm"
@@ -52,6 +53,7 @@
                                 </NuxtLink>
 
                                 <NuxtLink
+                                    v-if="settings.ratings"
                                     to="/profile/ratings"
                                     tabindex="-1"
                                     class="dropdown-item text-sm"
