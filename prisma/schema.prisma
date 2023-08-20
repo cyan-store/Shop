@@ -38,11 +38,12 @@ enum ShippingStatus {
 
 // Database
 model System {
-    id       Settings @id @default(SERVER_SETTINGS)
-    currency String   @default("CAD")
-    shipping String   @default("CA,US")
-    purchase Boolean  @default(true)
-    ratings  Boolean  @default(true)
+    id           Settings @id @default(SERVER_SETTINGS)
+    currency     String   @default("CAD")
+    shipping     String   @default("CA,US")
+    shippingCost Int      @default(1500) // Amount in cents
+    purchase     Boolean  @default(true)
+    ratings      Boolean  @default(true)
 }
 
 model Products {
