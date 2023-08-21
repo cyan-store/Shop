@@ -1,63 +1,32 @@
-# Nuxt 3 Minimal Starter
+# Store
 
-Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+![package-json-nuxt](https://img.shields.io/github/package-json/dependency-version/cyan-store/Shop/dev/nuxt) ![last-commit](https://img.shields.io/github/last-commit/cyan-store/Shop) ![repo-size](https://img.shields.io/github/repo-size/cyan-store/Shop)
 
-## Setup
+The frontend shop to cyan-store. Ensure `@cyan-store/Hook` and `@cyan-store/Assets` is running and configured in `.env` for complete functionality.
 
-Make sure to install the dependencies:
+### Install
 
-```bash
-# npm
-npm install
-
-# pnpm
-pnpm install
-
-# yarn
-yarn install
+```sh
+$ npm i
+$ cp .env.example .env
+$ nano .env # or any editor...
 ```
 
-## Development Server
+### Production/Development
 
-Start the development server on `http://localhost:3000`:
-
-```bash
-# npm
-npm run dev
-
-# pnpm
-pnpm run dev
-
-# yarn
-yarn dev
+```sh
+$ npm run build # Production
+$ npm run dev # Development
 ```
 
-## Production
+### Lint/Format
 
-Build the application for production:
-
-```bash
-# npm
-npm run build
-
-# pnpm
-pnpm run build
-
-# yarn
-yarn build
+```sh
+$ npm run lint
+$ npm run format
+$ npm run type-check
 ```
 
-Locally preview production build:
+## License
 
-```bash
-# npm
-npm run preview
-
-# pnpm
-pnpm run preview
-
-# yarn
-yarn preview
-```
-
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+[MIT](LICENSE)
