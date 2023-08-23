@@ -3,11 +3,7 @@
         <div class="lg:grid grid-rows-1 grid-cols-5 max-w-[1600px] m-auto">
             <div class="px-4 col-span-2 max-lg:mb-2">
                 <img class="h-[5em]" :src="shopIcon" :alt="shopName" />
-                <p>
-                    Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-                    Magni tempore facere earum fugiat, voluptatum eos quas
-                    voluptatibus corporis quos alias.
-                </p>
+                <p>{{ footerAbout }}</p>
             </div>
 
             <hr class="lg:hidden my-4" />
@@ -124,6 +120,9 @@ const supportEmail = computed(() => import.meta.env.VITE_EMAIL);
 const facebook = computed(() => import.meta.env.VITE_FACEBOOK);
 const twitter = computed(() => import.meta.env.VITE_TWITTER);
 const instagram = computed(() => import.meta.env.VITE_INSTAGRAM);
+
+// About
+const footerAbout = computed(() => import.meta.env.VITE_FOOTER);
 </script>
 
 <style scoped>

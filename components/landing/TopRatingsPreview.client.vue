@@ -91,7 +91,7 @@ import { LandingRating } from "@/composables/useFetchLanding";
 
 const app = useNuxtApp();
 const settings = useSettings();
-const show = computed(() => settings.ratings);
+const show = computed(() => settings.ratings && ratings.value.length !== 0);
 
 const period = ref("all");
 const loading = ref(true);

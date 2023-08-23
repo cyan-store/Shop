@@ -16,10 +16,7 @@
                 </h4>
 
                 <p class="text-sm max-w-[40em] my-4">
-                    Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-                    Iste nobis in numquam illo est ratione deleniti quod,
-                    quaerat veritatis explicabo quae nostrum eveniet eaque,
-                    ipsum laboriosam, provident adipisci vero. Numquam!
+                    {{ landingAbout }}
                 </p>
 
                 <NuxtLink
@@ -48,6 +45,7 @@ const settings = useSettings();
 
 const shopNameFull = computed(() => import.meta.env.VITE_FULL);
 const shopNameSub = computed(() => import.meta.env.VITE_SUB);
+const landingAbout = computed(() => import.meta.env.VITE_LANDING);
 const landing = computed(() => useAsset("landing/landing1.jpg"));
 const ratings = computed(() => settings.ratings);
 
