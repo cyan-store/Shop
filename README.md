@@ -1,4 +1,4 @@
-# Store
+# Store <img src="/public/socials/icon.png" align="right" width="150" />
 
 ![package-json-nuxt](https://img.shields.io/github/package-json/dependency-version/cyan-store/Shop/dev/nuxt) ![last-commit](https://img.shields.io/github/last-commit/cyan-store/Shop) ![repo-size](https://img.shields.io/github/repo-size/cyan-store/Shop)
 
