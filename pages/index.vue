@@ -1,11 +1,7 @@
 <template>
     <div>
         <div class="flex max-h-[500px] m-auto">
-            <img
-                src="https://source.unsplash.com/random/400x400"
-                class="w-1/2 p-4 bg max-md:hidden"
-            />
-
+            <img :src="landing" class="w-1/2 h-[500px] p-4 bg max-md:hidden" />
             <div class="w-full py-4">
                 <h2
                     class="font-bold text-5xl mb-3 max-md:text-center max-md:text-3xl"
@@ -52,6 +48,7 @@ const settings = useSettings();
 
 const shopNameFull = computed(() => import.meta.env.VITE_FULL);
 const shopNameSub = computed(() => import.meta.env.VITE_SUB);
+const landing = computed(() => useAsset("landing/landing1.jpg"));
 const ratings = computed(() => settings.ratings);
 
 useHead({ title: useTitle("Home") });

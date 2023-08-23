@@ -85,8 +85,8 @@
         </div>
 
         <div class="navbar-center">
-            <NuxtLink class="navbar-item" to="/">
-                <b class="font-bold text-xl">{{ shopName }}</b>
+            <NuxtLink class="navbar-item p-0 hover:bg-[#EDEDED]" to="/">
+                <img class="h-[3em]" :src="shopIcon" :alt="shopName" />
             </NuxtLink>
         </div>
 
@@ -119,7 +119,9 @@ const { $swal } = useNuxtApp();
 
 const settings = useSettings();
 const cart = useCart();
+
 const shopName = computed(() => import.meta.env.VITE_SHOP);
+const shopIcon = computed(() => useAsset("logo/logo1.png"));
 const auth = computed(() => status.value === "authenticated");
 const isFatal = computed(() => settings.state === "FATAL");
 

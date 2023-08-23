@@ -2,8 +2,7 @@
     <div v-if="!isFatal" class="mt-[5vh] bg-[#f3f3f3] p-10">
         <div class="lg:grid grid-rows-1 grid-cols-5 max-w-[1600px] m-auto">
             <div class="px-4 col-span-2 max-lg:mb-2">
-                <!-- TODO: Logo here -->
-                <h2 class="font-bold text-3xl mb-2">{{ shopName }}</h2>
+                <img class="h-[5em]" :src="shopIcon" :alt="shopName" />
                 <p>
                     Lorem ipsum, dolor sit amet consectetur adipisicing elit.
                     Magni tempore facere earum fugiat, voluptatum eos quas
@@ -117,6 +116,7 @@ const auth = computed(
 
 // Shop
 const shopName = computed(() => import.meta.env.VITE_SHOP);
+const shopIcon = computed(() => useAsset("logo/logo2.png"));
 const supportPhone = computed(() => import.meta.env.VITE_PHONE);
 const supportEmail = computed(() => import.meta.env.VITE_EMAIL);
 

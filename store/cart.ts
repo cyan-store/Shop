@@ -7,7 +7,6 @@ export interface CartItem {
     amount: number;
 }
 
-// TODO: Add expire
 export const useCart = defineStore("cart", () => {
     const items = ref<CartItem[]>([]);
     const max = reactive({

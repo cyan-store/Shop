@@ -1,6 +1,7 @@
+const assets = import.meta.env.VITE_ASSETS;
+
 export const useImage = (images: string) => {
     const first = images.split(",")[0];
-    const assets = import.meta.env.VITE_ASSETS;
 
     return first
         ? `${assets}/products/${first}`
@@ -8,10 +9,13 @@ export const useImage = (images: string) => {
 };
 
 export const useImages = (images: string) => {
-    const assets = import.meta.env.VITE_ASSETS;
     const imgs = images.split(",");
 
     return !images
         ? [`${assets}/assets/placeholders/products.jpg`]
         : imgs.map((i) => `${assets}/products/${i}`);
+};
+
+export const useAsset = (asset: string) => {
+    return `${assets}/assets/site/${asset}`;
 };
