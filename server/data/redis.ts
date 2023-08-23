@@ -6,8 +6,10 @@ const client = createClient({
 });
 
 client.on("error", (err) => {
-    // TODO: Improve this
-    process.stderr.write(String(err));
+    process.stderr.write(`[redis] Error at: ${env.CACHE_URL}`);
+    process.stderr.write(`[redis] isReady: ${client.isReady}`);
+    process.stderr.write(`[redis] ${err}`);
+    process.stdout.write("\n");
 });
 
 client.connect();
