@@ -37,6 +37,15 @@ enum ShippingStatus {
 }
 
 // Database
+model Admin {
+    id        String   @id @default(uuid())
+    name      String   @default("Admin")
+    email     String   @unique
+    pw_bcrypt String
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+}
+
 model System {
     id           Settings @id @default(SERVER_SETTINGS)
     currency     String   @default("CAD")
